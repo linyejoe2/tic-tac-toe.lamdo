@@ -9,7 +9,7 @@ cd ./dist # 進入生成的資料夾
 # deploy to github
 msg='來自 github action 的自動部署。'
 
-githubUrl=https://linyejoe2:${{secrets.LAMDO}}github.com/linyejoe2/tic-tac-toe.lamdo.git
+githubUrl=https://linyejoe2:${GITHUB_TOKEN}github.com/linyejoe2/tic-tac-toe.lamdo.git
 
 git config --global user.name "linyejoe2"
 
