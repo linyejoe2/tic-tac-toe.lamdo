@@ -7,10 +7,11 @@ export default class {
   public element: GameObject[];
 
   constructor() {
-    this.element = [new Button([20, 20])];
+    this.element = [new Button([40, 170], "跟朋友一起玩")];
+    this.element.push(new Button([130, 170], "跟機器人玩"));
   }
 
-  public render(app:Application): void{
+  public render(app: Application): void {
     for (const ele of this.element) {
       app.stage.addChild(ele.graph);
       ele.graph.position.set(ele.position.x, ele.position.y);
