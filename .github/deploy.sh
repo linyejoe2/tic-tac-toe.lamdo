@@ -22,7 +22,7 @@ git add -A
 git commit -m "${msg}"
 
 # 推送到github
-git push -f --progress $githubUrl master:release
+git push -f $githubUrl master:release
 
 cd -
 
