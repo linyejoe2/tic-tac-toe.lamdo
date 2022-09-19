@@ -24,9 +24,9 @@ githubUrl=git@github.com:linyejoe2/tic-tac-toe.lamdo.git
 
 #   githubUrl=https://linyejoe2:${GITHUB_TOKEN}@github.com/linyejoe2/tic-tac-toe.lamdo.git
 
-#   git config --global user.name "linyejoe2"
+git config --global user.name "linyejoe2"
 
-#   git config --global user.email "linyejoe2@gmail.com"
+git config --global user.email "linyejoe2@gmail.com"
 
 # fi
 
