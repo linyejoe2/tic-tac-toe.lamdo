@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build --base=/tic-tac-toe.lamdo/",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "deploy": "bash ./.github/deploy.sh"
   },
   "devDependencies": {
     "@pixi/assets": "^6.5.3",

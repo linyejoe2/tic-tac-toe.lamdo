@@ -1,0 +1,19 @@
+name: 'deployWeb'
+
+## 監聽 main 分支若有 push 行為就執行
+on:
+  push:
+    branches:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: "16.x"
+    - name : run deploy.sh
+      run: npm install && npm run deploy
