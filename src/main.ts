@@ -1,6 +1,8 @@
 import "./style/style.css";
 import { Application } from 'pixi.js';
 import MenuScenes from "./scenes/MenuScenes";
+import EndGameScenes from "./scenes/EndGameScenes";
+import { ScenesManager } from "./system/ScenesManager";
 
 const app = new Application({
   width: 200,// 寬度
@@ -11,8 +13,10 @@ const app = new Application({
 
 document.querySelector("#app")?.append(app.view);
 
-const menuSenes = new MenuScenes;
-menuSenes.render(app);
+const scenesManager = new ScenesManager(new MenuScenes);
+
+scenesManager.add(new EndGameScenes);
+scenesManager.activeScenes.render(app);
 
 // Listen for frame updates
 app.ticker.add(() => {

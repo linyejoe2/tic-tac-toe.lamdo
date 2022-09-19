@@ -1,7 +1,8 @@
 import { Graphics } from "pixi.js";
 import { Vector } from "../types";
+import { IGameObject } from "./IGameObject";
 
-export abstract class GameObject {
+export abstract class GameObject implements IGameObject {
   public abstract graph: Graphics;
   public position: Vector;
 
