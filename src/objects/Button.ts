@@ -5,17 +5,17 @@ import { Text } from 'pixi.js';
 
 export class Button extends GameObject {
   public visible: boolean;
-  graph: Graphics;
+  graph;
 
   constructor(position: number[] = [0, 0], text = "") {
     super(position);
     this.visible = false;
     this.graph = new Graphics();
     this.graph.beginFill(0x213547)
-    this.graph.drawRoundedRect(0, 0, 30, 8, 2);
+    this.graph.drawRoundedRect(0, 0, 40, 15, 2);
     this.graph.endFill()
-    const textTemp = new Text(text, { 
-      fontSize: 4 ,
+    const textTemp = new Text(text, {
+      fontSize: 6,
       fill: ["#246080"]
     });
     this.graph.addChild(textTemp);
