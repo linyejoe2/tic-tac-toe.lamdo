@@ -1,16 +1,14 @@
 import { Application, IApplicationOptions } from "pixi.js";
-import { IGameObject } from "../objects/IGameObject";
+import { IGameObject } from "../interface/IGameObject";
 import renderer from "../system/renderer";
-import { ScenesManager } from "../system/ScenesManager";
-import MenuScenes from "./MenuScenes";
 
 /**
- * 場景 abstract class 
+ * 場景抽象類別 
  */
 export default abstract class {
-  public abstract element: IGameObject[];
-  public abstract name: string;
-  public app: Application;
+  public abstract element: IGameObject[]; // 這個場景裡的所有物件
+  public abstract name: string; // 這個場景的名稱
+  public app: Application; // 這個場景的畫布
 
   constructor() {
     this.app = new Application({
@@ -30,12 +28,4 @@ export default abstract class {
       renderer(this.app, ele);
     }
   }
-
-  // public checkButtonClick(app: Application, scenesManager: ScenesManager) {
-  //   for (const ele of this.element) {
-  //     if (ele.clicked) {
-  //       ele.clickfunc()
-  //     }
-  //   }
-  // }
 }
