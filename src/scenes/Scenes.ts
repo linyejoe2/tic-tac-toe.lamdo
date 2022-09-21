@@ -1,24 +1,41 @@
-import { Application } from "pixi.js";
+import { Application, IApplicationOptions } from "pixi.js";
 import { IGameObject } from "../objects/IGameObject";
 import renderer from "../system/renderer";
+import { ScenesManager } from "../system/ScenesManager";
+import MenuScenes from "./MenuScenes";
 
+/**
+ * 場景 abstract class 
+ */
 export default abstract class {
   public abstract element: IGameObject[];
   public abstract name: string;
+  public app: Application;
 
-  public render(app: Application): void {
-    app.stage.destroy;
+  constructor() {
+    this.app = new Application({
+      width: 200,// 寬度
+      height: 200,// 高度
+      resolution: 4,// 放大倍數
+      backgroundColor: 0x22516b// 畫布背景顏色
+    })
+  }
+
+  /**
+   * 在畫布上繪製場景裡的物件。
+   */
+  public render(): void {
+    this.app.stage.destroy;
     for (const ele of this.element) {
-      renderer(app, ele);
+      renderer(this.app, ele);
     }
   }
 
-  public toggleVisible(app: Application): void {
-    for (const ele of this.element) {
-      if (ele.visible != undefined) {
-        ele.visible ? ele.visible = false : ele.visible;
-      }
-    }
-    this.render(app);
-  }
+  // public checkButtonClick(app: Application, scenesManager: ScenesManager) {
+  //   for (const ele of this.element) {
+  //     if (ele.clicked) {
+  //       ele.clickfunc()
+  //     }
+  //   }
+  // }
 }

@@ -6,4 +6,5 @@ export interface IGameObject {
   text?: Text;// 他可能會是文字物件
   visible?: boolean;// 他看不看的到
   position: Vector;// 物件的位置
+  clicked?: boolean;// 有沒有被點擊
 }
