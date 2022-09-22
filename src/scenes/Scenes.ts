@@ -1,4 +1,4 @@
-import { Application, IApplicationOptions } from "pixi.js";
+import { Application } from "pixi.js";
 import { IGameObject } from "../interface/IGameObject";
 import renderer from "../system/renderer";
 
