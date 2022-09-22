@@ -1,5 +1,3 @@
-import { string2hex } from "@pixi/utils";
-
 export class ChessBoard {
   public chesses: number[][] = [];
   public nByn: number;
@@ -24,7 +22,6 @@ export class ChessBoard {
   CheckAll(x: number, y: number): boolean[] {
     //橫向檢測
     let horizontalWinner: boolean = this.CheckLine(this.chesses[y]);
-
     //左上到右下的斜線
     let bevelWinner: boolean = this.CheckBevel(this.chesses);
 

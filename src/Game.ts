@@ -6,9 +6,13 @@ export default class GameObject {
   public currentPlayer = 1;
   public slots: Graphics[][] = [];
   public board: ChessBoard = new ChessBoard(3);
+  private bingoLineGraphics: Graphics = new Graphics();
   private screenWidth = 100;
   private screenHeight = 100;
   private nByn = 3;
+
+  //from to
+  private bingoLines: number[] = [];
 
   /*
    *
@@ -79,13 +83,28 @@ export default class GameObject {
           console.log(x, y);
 
           if (this.board.SetChess(x, y, this.currentPlayer)) {
-            let winner = this.board.CheckAll(x, y);
+            const winner = this.board.CheckAll(x, y);
             if (winner.find((temp) => temp)) {
-              console.log("有贏家欸 贏家是"+(this.currentPlayer==1?"O":"X"));
-              if(winner[0])console.log("贏在第"+y+"橫排");
-              if(winner[1])console.log("贏在從左上到右下的斜線");
-              if(winner[2])console.log("贏在第"+x+"縱排");
-              if(winner[3])console.log("贏在從右上到左下的斜線");
+              this.bingoLines = [-1, -1, -1, -1];
+              console.log(
+                "有贏家欸 贏家是" + (this.currentPlayer == 1 ? "O" : "X")
+              );
+              if (winner[0]) {
+                console.log("贏在第" + y + "橫排");
+                this.bingoLines[0] = y;
+              }
+              if (winner[1]) {
+                console.log("贏在從左上到右下的斜線");
+                this.bingoLines[1] = 1;
+              }
+              if (winner[2]) {
+                console.log("贏在第" + x + "縱排");
+                this.bingoLines[2] = x;
+              }
+              if (winner[3]) {
+                console.log("贏在從右上到左下的斜線");
+                this.bingoLines[3] = 1;
+              }
             }
             //換人，哈
             console.log("換人");
@@ -99,6 +118,39 @@ export default class GameObject {
         lineHead.push(slot);
       }
     }
+    this.slots[0][0].endFill();
+    this.bingoLineGraphics.beginFill(0xff0000);
+    console.log(this.bingoLines);
+
+    if (this.bingoLines[1] > -1) {
+      console.log("營啦");
+      this.bingoLineGraphics.drawPolygon(
+        1,
+        0,
+        this.screenWidth,
+        this.screenHeight - 1,
+        this.screenWidth - 1,
+        this.screenHeight,
+        0,
+        1
+      );
+    }
+    if (this.bingoLines[3] > -1) {
+      this.bingoLineGraphics.drawPolygon(
+        this.screenWidth - 1,
+        0,
+
+        this.screenWidth,
+        1,
+
+        1,
+        this.screenHeight,
+
+        0,
+        this.screenHeight - 1
+      );
+    }
+    this.bingoLineGraphics.endFill();
   }
 
   //畫線
@@ -118,13 +170,13 @@ export default class GameObject {
   public render(app: Application) {
     this.DrawTicTacToeSlot();
     this.DrawTicTacToeLine();
-    this.graphics.zIndex = 2;
+    //this.graphics.zIndex = 2;
     app.stage.addChild(this.graphics);
     this.slots.forEach((slotColumn) => {
       slotColumn.forEach((slot) => {
         app.stage.addChild(slot);
-        slot.zIndex = 1;
       });
     });
+    app.stage.addChild(this.bingoLineGraphics);
   }
 }
