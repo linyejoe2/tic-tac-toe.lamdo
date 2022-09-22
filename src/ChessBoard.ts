@@ -35,9 +35,8 @@ export class ChessBoard {
     let verticalWinner: boolean = this.CheckLine(newChesses[x]);
 
     //右上到左下的斜線
-    let bevel2Winner: boolean = this.CheckBevel(newChesses);
-    console.log(this.chesses);
-    console.log(newChesses);
+    let bevel2Winner: boolean = this.CheckBevel(this.chesses.reverse());
+    this.chesses.reverse();
     return [horizontalWinner, bevelWinner, verticalWinner, bevel2Winner];
   }
 
