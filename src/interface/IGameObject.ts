@@ -1,4 +1,4 @@
-import { Graphics, Text } from "pixi.js";
+import { Application, Graphics, Text } from "pixi.js";
 import { Vector } from "../types";
 
 export interface IGameObject {
@@ -7,4 +7,5 @@ export interface IGameObject {
   position: Vector;// 物件的位置
   visible?: boolean;// 他看不看的到
   clicked?: boolean;// 有沒有被點擊
+  render?: (app:Application) => void;// 自己可以處理自己的渲染
 }

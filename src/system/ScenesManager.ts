@@ -56,6 +56,7 @@ export class ScenesManager {
       // 渲染物件
       this._activeScenes?.render();
       // 在 DOM 上繪製
+      console.log(this._activeScenes);
       document.querySelector("#app")?.append(this._activeScenes.app.view);
     }
   }
