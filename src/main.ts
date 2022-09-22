@@ -15,8 +15,8 @@ const game1 = new Game();
 // Listen for frame updates
 app.ticker.add(() => {
   app.stage.removeChildren();
-  game1.render(app);
   crab1.render(app);
   crab1.update(app.ticker.deltaMS);
+  game1.render(app);
 
 });
