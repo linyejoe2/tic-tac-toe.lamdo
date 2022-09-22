@@ -8,7 +8,7 @@
     "build": "tsc && vite build --base=/tic-tac-toe.lamdo/",
     "preview": "vite preview",
     "test": "jest",
-    "test2": "jest --coverage",
+    "test-with-report": "jest --coverage",
     "lint": "eslint . --ext .ts",
     "deploy": "bash ./.github/deploy.sh"
   },
