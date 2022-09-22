@@ -16,7 +16,7 @@ const game1 = new Game();
 app.ticker.add(() => {
   app.stage.removeChildren();
   crab1.render(app);
-  crab1.update(app.ticker.deltaMS);
   game1.render(app);
+  crab1.update(app.ticker.deltaMS);
 
 });

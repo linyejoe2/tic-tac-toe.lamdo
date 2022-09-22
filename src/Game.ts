@@ -121,9 +121,21 @@ export default class GameObject {
     this.slots[0][0].endFill();
     this.bingoLineGraphics.beginFill(0xff0000);
     console.log(this.bingoLines);
-
+    //橫線
+    if (this.bingoLines[0] > -1) {
+      this.bingoLineGraphics.drawPolygon(
+        0,
+        (this.bingoLines[0] * this.screenHeight) / this.nByn + this.screenHeight/this.nByn/2,
+        this.screenWidth,
+        (this.bingoLines[0] * this.screenHeight) / this.nByn + this.screenHeight/this.nByn/2,
+        this.screenWidth,
+        (this.bingoLines[0] * this.screenHeight) / this.nByn + this.screenHeight/this.nByn/2 +1,
+        0,
+        (this.bingoLines[0] * this.screenHeight) / this.nByn + this.screenHeight/this.nByn/2 +1
+      );
+    }
+    //斜線1
     if (this.bingoLines[1] > -1) {
-      console.log("營啦");
       this.bingoLineGraphics.drawPolygon(
         1,
         0,
@@ -135,6 +147,21 @@ export default class GameObject {
         1
       );
     }
+    //縱線
+    if(this.bingoLines[2] > -1)
+    {
+      this.bingoLineGraphics.drawPolygon(
+        (this.bingoLines[2] * this.screenWidth) / this.nByn + this.screenWidth/this.nByn/2,
+        0,
+        (this.bingoLines[2] * this.screenWidth) / this.nByn + this.screenWidth/this.nByn/2 + 1,
+        0,
+        (this.bingoLines[2] * this.screenWidth) / this.nByn + this.screenWidth/this.nByn/2 +1,
+        this.screenHeight,
+        (this.bingoLines[2] * this.screenWidth) / this.nByn + this.screenWidth/this.nByn/2 ,
+        this.screenHeight
+      );
+    }
+    //斜線2
     if (this.bingoLines[3] > -1) {
       this.bingoLineGraphics.drawPolygon(
         this.screenWidth - 1,
