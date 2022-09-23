@@ -21,7 +21,7 @@ export class TextObject implements IGameObject {
       y: position[1]
     };
     this.text = new Text(text, {
-      fontFamily: "Slabo",// 字型
+      // fontFamily: "\"Poppins\", sans-serif",// 字型
       fontSize: 20,// 大小
       fill: ["#07344d"]// 顏色
     });

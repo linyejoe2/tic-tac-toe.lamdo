@@ -1,14 +1,15 @@
 import { Application } from "pixi.js";
 import { IGameObject } from "../interface/IGameObject";
+import { IScenes } from "../interface/IScencs";
 import renderer from "../system/renderer";
 
 /**
  * 場景抽象類別 
  */
-export default abstract class {
-  public abstract element: IGameObject[]; // 這個場景裡的所有物件
-  public abstract name: string; // 這個場景的名稱
-  public app: Application; // 這個場景的畫布
+export default abstract class implements IScenes {
+  public abstract element: IGameObject[];// 這個場景裡的所有物件
+  public abstract name: string;// 這個場景的名稱
+  public app: Application;// 這個場景的畫布
 
   constructor() {
     this.app = new Application({

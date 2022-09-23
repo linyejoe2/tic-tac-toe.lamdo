@@ -1,21 +1,55 @@
 import { Application, Graphics, LineStyle } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
+import EndGameScenes from "../scenes/EndGameScenes";
+import GameScenes from "../scenes/GameScenes";
+import Scenes from "../scenes/Scenes";
+import { ScenesManager } from "../system/ScenesManager";
 import { ChessBoard } from "./ChessBoard";
 
 export default class GameView extends GameObject {
   public graph: Graphics = new Graphics();
+  private bingoLineGraphics: Graphics = new Graphics();
   public currentPlayer = 1;
   public slots: Graphics[][] = [];
-  public board: ChessBoard = new ChessBoard(3);
+  public board: ChessBoard = new ChessBoard(true);
   private screenWidth = 100;
   private screenHeight = 100;
   private nByn = 3;
 
   constructor(position: number[] = [0, 0]) {
     super(position);
+    this.SetEventOnChessBoard();
     // this.graph.position.set(...position);
   }
-
+  //註冊當玩家勝利的事件
+  private SetEventOnChessBoard(): void {
+    this.board.PlayerWon.push(this.WhenWinnerOut);
+    this.board.PlayerDraw = this.WhenDraw;
+  }
+  //當玩家勝利時會呼叫這個funciton，並從參數傳入勝利者 1為O 2為X
+  //還沒加入勝利者在第幾排
+  private WhenWinnerOut(winner: number): void {
+    if (ScenesManager.get("EndGameScenes")) {
+      setTimeout(() => {
+        ScenesManager.add(new EndGameScenes);
+        ScenesManager.get("EndGameScenes")!.winner = winner;
+        ScenesManager.ChangeScenes("EndGameScenes");
+        return;
+      }, 500)
+    }
+    console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
+  }
+  private WhenDraw() {
+    if (ScenesManager.get("EndGameScenes")) {
+      setTimeout(() => {
+        ScenesManager.add(new EndGameScenes);
+        ScenesManager.get("EndGameScenes")!.winner = 0;
+        ScenesManager.ChangeScenes("EndGameScenes");
+        return;
+      }, 500)
+    }
+    console.log("平手，嫩");
+  }
   /*
    *
    *
@@ -80,31 +114,113 @@ export default class GameView extends GameObject {
         slot.endFill();
         slot.interactive = true;
         slot.buttonMode = true;
-        //點下去先提醒這是第幾塊地
-        slot.on("pointerdown", () => {
-          console.log(x, y);
 
-          if (this.board.SetChess(x, y, this.currentPlayer)) {
-            const winner = this.board.CheckAll(x, y);
-            if (winner.find((temp) => temp)) {
-              console.log("有贏家欸 贏家是" + (this.currentPlayer == 1 ? "O" : "X"));
-              if (winner[0]) console.log("贏在第" + y + "橫排");
-              if (winner[1]) console.log("贏在從左上到右下的斜線");
-              if (winner[2]) console.log("贏在第" + x + "縱排");
-              if (winner[3]) console.log("贏在從右上到左下的斜線");
+        //點下去
+        slot.on("pointerdown", () => {
+          //設符號
+          const setSuccessfully = this.board.SetChess(
+            x,
+            y,
+            this.board.currentPlayer
+          );
+          //成功設置
+          if (setSuccessfully) {
+            x = setSuccessfully[1] ? setSuccessfully[1] : x;
+            y = setSuccessfully[2] ? setSuccessfully[2] : y;
+
+            if (this.board.bingoLines[0] > 0) {
+              console.log("贏在第" + this.board.lastY + "橫排");
             }
+            if (this.board.bingoLines[1] > 0) {
+              console.log("贏在從左上到右下的斜線");
+            }
+            if (this.board.bingoLines[2] > 0) {
+              console.log("贏在第" + this.board.lastX + "縱排");
+            }
+            if (this.board.bingoLines[3] > 0) {
+              console.log("贏在從右上到左下的斜線");
+            }
+
             //換人，哈
             console.log("換人");
-            this.currentPlayer = this.currentPlayer == 1 ? 2 : 1;
           } else {
             console.log("這格有東西了");
           }
-          //對格子做改動
         });
         this.slots[y].push(slot);
         lineHead.push(slot);
       }
     }
+    this.slots[0][0].endFill();
+    this.bingoLineGraphics.beginFill(0xff0000);
+    //橫線
+    if (this.board.bingoLines[0] > -1) {
+      this.bingoLineGraphics.drawPolygon(
+        0,
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
+        this.screenHeight / this.nByn / 2,
+        this.screenWidth,
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
+        this.screenHeight / this.nByn / 2,
+        this.screenWidth,
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
+        this.screenHeight / this.nByn / 2 +
+        1,
+        0,
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
+        this.screenHeight / this.nByn / 2 +
+        1
+      );
+    }
+    //斜線1
+    if (this.board.bingoLines[1] > -1) {
+      this.bingoLineGraphics.drawPolygon(
+        1,
+        0,
+        this.screenWidth,
+        this.screenHeight - 1,
+        this.screenWidth - 1,
+        this.screenHeight,
+        0,
+        1
+      );
+    }
+    //縱線
+    if (this.board.bingoLines[2] > -1) {
+      this.bingoLineGraphics.drawPolygon(
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
+        this.screenWidth / this.nByn / 2,
+        0,
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
+        this.screenWidth / this.nByn / 2 +
+        1,
+        0,
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
+        this.screenWidth / this.nByn / 2 +
+        1,
+        this.screenHeight,
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
+        this.screenWidth / this.nByn / 2,
+        this.screenHeight
+      );
+    }
+    //斜線2
+    if (this.board.bingoLines[3] > -1) {
+      this.bingoLineGraphics.drawPolygon(
+        this.screenWidth - 1,
+        0,
+
+        this.screenWidth,
+        1,
+
+        1,
+        this.screenHeight,
+
+        0,
+        this.screenHeight - 1
+      );
+    }
+    this.bingoLineGraphics.endFill();
   }
 
   //畫線
@@ -124,13 +240,13 @@ export default class GameView extends GameObject {
   public render(app: Application) {
     this.DrawTicTacToeSlot();
     this.DrawTicTacToeLine();
-    this.graph.zIndex = 2;
+    //this.graph.zIndex = 2;
     app.stage.addChild(this.graph);
     this.slots.forEach((slotColumn) => {
       slotColumn.forEach((slot) => {
         app.stage.addChild(slot);
-        slot.zIndex = 1;
       });
     });
+    app.stage.addChild(this.bingoLineGraphics);
   }
 }

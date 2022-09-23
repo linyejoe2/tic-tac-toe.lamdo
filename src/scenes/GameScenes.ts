@@ -1,7 +1,7 @@
 import { IGameObject } from "../interface/IGameObject";
 import Scnens from "./Scenes";
-import GameView from "../game/GameView";
 import { Button } from "../objects/Button";
+import GameView from "../game/GameView";
 
 /**
  * 開始(主菜單)畫面
@@ -26,7 +26,7 @@ export default class extends Scnens {
  */
   public render(): void {
     if (this.element[0] instanceof GameView) {
-      this.element[0].render(this.app);
+      this.element[0].render!(this.app);
     }
   }
 }
