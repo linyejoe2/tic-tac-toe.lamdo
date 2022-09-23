@@ -3,9 +3,8 @@ import { ChessBoard } from "./ChessBoard";
 
 export default class GameView {
   public graphics: Graphics = new Graphics();
-  public currentPlayer = 1;
   public slots: Graphics[][] = [];
-  public board: ChessBoard = new ChessBoard(3);
+  public board: ChessBoard = new ChessBoard(true);
   private bingoLineGraphics: Graphics = new Graphics();
   private screenWidth = 100;
   private screenHeight = 100;
@@ -18,16 +17,16 @@ export default class GameView {
   //註冊當玩家勝利的事件
   private SetEventOnChessBoard(): void {
     this.board.PlayerWon.push(this.WhenWinnerOut);
+    this.board.PlayerDraw = this.WhenDraw;
   }
   //當玩家勝利時會呼叫這個funciton，並從參數傳入勝利者 1為O 2為X
   //還沒加入勝利者在第幾排
   private WhenWinnerOut(winner: number): void {
     console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
   }
-
-  //from to
-  private bingoLines: number[] = [];
-
+  private WhenDraw() {
+    console.log("平手，嫩");
+  }
   /*
    *
    *
@@ -92,36 +91,38 @@ export default class GameView {
         slot.endFill();
         slot.interactive = true;
         slot.buttonMode = true;
-        //點下去先提醒這是第幾塊地
+
+        //點下去
         slot.on("pointerdown", () => {
-          if (this.board.SetChess(x, y, this.currentPlayer)) {
-            const winner = this.board.CheckAll(x, y);
-            if (winner.find((temp) => temp)) {
-              this.bingoLines = [-1, -1, -1, -1];
-              if (winner[0]) {
-                console.log("贏在第" + y + "橫排");
-                this.bingoLines[0] = y;
-              }
-              if (winner[1]) {
-                console.log("贏在從左上到右下的斜線");
-                this.bingoLines[1] = 1;
-              }
-              if (winner[2]) {
-                console.log("贏在第" + x + "縱排");
-                this.bingoLines[2] = x;
-              }
-              if (winner[3]) {
-                console.log("贏在從右上到左下的斜線");
-                this.bingoLines[3] = 1;
-              }
+          //設符號
+          const setSuccessfully = this.board.SetChess(
+            x,
+            y,
+            this.board.currentPlayer
+          );
+          //成功設置
+          if (setSuccessfully) {
+            x = setSuccessfully[1]?setSuccessfully[1]:x;
+            y = setSuccessfully[2]?setSuccessfully[2]:y;
+            
+            if (this.board.bingoLines[0]>0) {
+              console.log("贏在第" + this.board.lastY + "橫排");
             }
+            if (this.board.bingoLines[1]>0) {
+              console.log("贏在從左上到右下的斜線");
+            }
+            if (this.board.bingoLines[2]>0) {
+              console.log("贏在第" + this.board.lastX + "縱排");
+            }
+            if (this.board.bingoLines[3]>0) {
+              console.log("贏在從右上到左下的斜線");
+            }
+
             //換人，哈
             console.log("換人");
-            this.currentPlayer = this.currentPlayer == 1 ? 2 : 1;
           } else {
             console.log("這格有東西了");
           }
-          //對格子做改動
         });
         this.slots[y].push(slot);
         lineHead.push(slot);
@@ -130,26 +131,26 @@ export default class GameView {
     this.slots[0][0].endFill();
     this.bingoLineGraphics.beginFill(0xff0000);
     //橫線
-    if (this.bingoLines[0] > -1) {
+    if (this.board.bingoLines[0] > -1) {
       this.bingoLineGraphics.drawPolygon(
         0,
-        (this.bingoLines[0] * this.screenHeight) / this.nByn +
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
           this.screenHeight / this.nByn / 2,
         this.screenWidth,
-        (this.bingoLines[0] * this.screenHeight) / this.nByn +
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
           this.screenHeight / this.nByn / 2,
         this.screenWidth,
-        (this.bingoLines[0] * this.screenHeight) / this.nByn +
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
           this.screenHeight / this.nByn / 2 +
           1,
         0,
-        (this.bingoLines[0] * this.screenHeight) / this.nByn +
+        (this.board.bingoLines[0] * this.screenHeight) / this.nByn +
           this.screenHeight / this.nByn / 2 +
           1
       );
     }
     //斜線1
-    if (this.bingoLines[1] > -1) {
+    if (this.board.bingoLines[1] > -1) {
       this.bingoLineGraphics.drawPolygon(
         1,
         0,
@@ -162,26 +163,26 @@ export default class GameView {
       );
     }
     //縱線
-    if (this.bingoLines[2] > -1) {
+    if (this.board.bingoLines[2] > -1) {
       this.bingoLineGraphics.drawPolygon(
-        (this.bingoLines[2] * this.screenWidth) / this.nByn +
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
           this.screenWidth / this.nByn / 2,
         0,
-        (this.bingoLines[2] * this.screenWidth) / this.nByn +
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
           this.screenWidth / this.nByn / 2 +
           1,
         0,
-        (this.bingoLines[2] * this.screenWidth) / this.nByn +
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
           this.screenWidth / this.nByn / 2 +
           1,
         this.screenHeight,
-        (this.bingoLines[2] * this.screenWidth) / this.nByn +
+        (this.board.bingoLines[2] * this.screenWidth) / this.nByn +
           this.screenWidth / this.nByn / 2,
         this.screenHeight
       );
     }
     //斜線2
-    if (this.bingoLines[3] > -1) {
+    if (this.board.bingoLines[3] > -1) {
       this.bingoLineGraphics.drawPolygon(
         this.screenWidth - 1,
         0,
