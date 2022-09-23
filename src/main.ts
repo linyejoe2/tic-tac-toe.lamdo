@@ -1,7 +1,7 @@
 import "./style.css";
 import { Application } from 'pixi.js';
 import Crab from "./Crab";
-import Game from "./Game";
+import Game from "./GameView";
 const app = new Application({
   width: 100,// 寬度
   height: 100,// 高度

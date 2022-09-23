@@ -1,3 +1,5 @@
+type PlayerWinEvent = (winner: number) => void;
+
 export class ChessBoard {
   public chesses: number[][] = [];
   public nByn: number;
@@ -12,6 +14,8 @@ export class ChessBoard {
     }
   }
 
+  public PlayerWon: PlayerWinEvent[] = [];
+
   SetChess(x: number, y: number, player: number): boolean {
     if (this.chesses[y][x] != 0) return false;
     this.chesses[y][x] = player;
@@ -21,20 +25,33 @@ export class ChessBoard {
   //檢測只會發生在最新下子的地方
   CheckAll(x: number, y: number): boolean[] {
     //橫向檢測
-    let horizontalWinner: boolean = this.CheckLine(this.chesses[y]);
+    const horizontalWinner: boolean = this.CheckLine(this.chesses[y]);
     //左上到右下的斜線
-    let bevelWinner: boolean = this.CheckBevel(this.chesses);
+    const bevelWinner: boolean = this.CheckBevel(this.chesses);
 
     //轉置
-    let newChesses = this.Transpose(this.chesses);
+    const newChesses = this.Transpose(this.chesses);
 
     //縱向檢測
-    let verticalWinner: boolean = this.CheckLine(newChesses[x]);
+    const verticalWinner: boolean = this.CheckLine(newChesses[x]);
 
     //右上到左下的斜線
-    let bevel2Winner: boolean = this.CheckBevel(this.chesses.reverse());
+    const bevel2Winner: boolean = this.CheckBevel(this.chesses.reverse());
     this.chesses.reverse();
-    return [horizontalWinner, bevelWinner, verticalWinner, bevel2Winner];
+
+    const winningArr = [
+      horizontalWinner,
+      bevelWinner,
+      verticalWinner,
+      bevel2Winner,
+    ];
+    const hasWinner = winningArr.findIndex((element) => element == true);
+    if (hasWinner >= 0) {
+      this.PlayerWon.forEach((element) => {
+        element.call(this, this.chesses[y][x]);
+      });
+    }
+    return winningArr;
   }
 
   CheckLine(line: number[]): boolean {
