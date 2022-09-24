@@ -1,8 +1,6 @@
-import { Application, Graphics, LineStyle } from "pixi.js";
+import { Application, Graphics } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
 import EndGameScenes from "../scenes/EndGameScenes";
-import GameScenes from "../scenes/GameScenes";
-import Scenes from "../scenes/Scenes";
 import { ScenesManager } from "../system/ScenesManager";
 import { ChessBoard } from "./ChessBoard";
 
