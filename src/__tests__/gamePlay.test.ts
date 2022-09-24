@@ -1,6 +1,6 @@
 import MenuScenes from "../scenes/MenuScenes";
 import { ScenesManager } from "../system/ScenesManager";
-
+ 
 describe('GamePlay', () => {
   // 應該要初始化場景管理器，並顯示第一個場景
   it("should init ScenesManager, and show first scenes (MenuScenes)", () => {

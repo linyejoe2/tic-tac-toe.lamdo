@@ -37,4 +37,8 @@ describe('這是一個測試的範例', () => {
       expect(truthy).toBeTruthy();
     }
   });
+
+  it('should be 1', () => {
+    expect(1).toBe(1);
+  });
 });

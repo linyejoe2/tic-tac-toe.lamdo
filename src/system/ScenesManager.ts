@@ -1,8 +1,5 @@
 import { IScenes } from "../interface/IScencs";
-import EndGameScenes from "../scenes/EndGameScenes";
 import GameScenes from "../scenes/GameScenes";
-import MenuScenes from "../scenes/MenuScenes";
-import Scenes from "../scenes/Scenes";
 import { TScenes } from "../types";
 
 /**
