@@ -14,7 +14,7 @@ export default class extends Scnens {
 
   constructor() {
     super();
-    this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
+    this.element = [new Button("回到主選單", [85, 130], "MenuScenes")];
   }
 
   /**
