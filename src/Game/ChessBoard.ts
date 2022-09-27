@@ -54,6 +54,7 @@ export class ChessBoard {
       //機器人選一個地方
       const position = this.agent.PickPosition();
       //機器人下棋
+      if(!position)return false;
       this.chesses[position[1]][position[0]] = 2;
       this.lastX = position[0];
       this.lastY = position[1];

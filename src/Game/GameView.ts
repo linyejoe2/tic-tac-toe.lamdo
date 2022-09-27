@@ -23,6 +23,15 @@ export default class GameView {
     this.DrawTicTacToeLine();
   }
 
+  private SetAllButtonActivate(activate:boolean)
+  {
+    for (let y = 0; y < this.nByn; y++) {
+      for (let x = 0; x < this.nByn; x++) {
+        this.chessesView[y][x].interactive = activate;
+        this.chessesView[y][x].buttonMode = activate;
+      }
+    }
+  }
   //註冊當玩家勝利的事件
   private SetEventOnChessBoard(): void {
     //平手
@@ -36,12 +45,7 @@ export default class GameView {
     this.board.PlayerWon.push((winner: number) => {
       //贏了要把按鈕都disable，防止偷按
       console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
-      for (let y = 0; y < this.nByn; y++) {
-        for (let x = 0; x < this.nByn; x++) {
-          this.chessesView[y][x].interactive = false;
-          this.chessesView[y][x].buttonMode = false;
-        }
-      }
+      this.SetAllButtonActivate(false);
       //把bingo線都拿出來畫，哈
       console.log(this.board.bingoLines);
 
@@ -61,12 +65,11 @@ export default class GameView {
       //左上右下斜線
       if (this.board.bingoLines[1] >= 0) {
         this.bingoLineGraphics.drawPolygon(
-          new Point(lineWidth,0),
-          new Point(0,lineWidth),
-          new Point(this._width-lineWidth,this._height),
-          new Point(this._width,this._height-lineWidth)
+          new Point(lineWidth, 0),
+          new Point(0, lineWidth),
+          new Point(this._width - lineWidth, this._height),
+          new Point(this._width, this._height - lineWidth)
         );
-
       }
       //縱線
       if (this.board.bingoLines[2] >= 0) {
@@ -74,23 +77,26 @@ export default class GameView {
           this._width / 6 + (this._width / 6) * this.board.bingoLines[2] * 2,
           0,
           lineWidth,
-          this._height,
+          this._height
         );
       }
       //右上左下斜線
       if (this.board.bingoLines[3] >= 0) {
         this.bingoLineGraphics.drawPolygon(
-          new Point(this._width-lineWidth,0),
-          new Point(this._width,lineWidth),
-          new Point(lineWidth,this._height),
-          new Point(0,this._height-lineWidth),
+          new Point(this._width - lineWidth, 0),
+          new Point(this._width, lineWidth),
+          new Point(lineWidth, this._height),
+          new Point(0, this._height - lineWidth)
         );
       }
       //bingoLineGraphics
     });
 
     //棋盤更新，通常是被機器人更新的，哈
-    this.board.Update = () => {
+    this.board.Update = async () =>  {
+      this.SetAllButtonActivate(false);
+      await new Promise(f => setTimeout(f, 1000));
+      this.SetAllButtonActivate(true);
       this.DrawSlot(this.board.lastX, this.board.lastY);
       return;
     };
@@ -182,7 +188,7 @@ export default class GameView {
     }
     this.chessesView[y][x].endFill();
   }
-  private SetChess(): void {
+  private async SetChess(): Promise<void> {
     const temp = this as unknown as Array<any>;
     const x = temp[0] as number;
     const y = temp[1] as number;
