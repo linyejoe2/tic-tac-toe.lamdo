@@ -12,8 +12,8 @@ export interface IGameObject {
 
 export interface IButton {
   graph: Graphics;// 他會有一個圖像
-  text: string;// 他會有一個文字，等於傳入值
   position: Vector;// 他會有位置
+  text: string;// 他會有一個文字，等於傳入值
   visible: boolean;// 他看不看的到
   // clicked: boolean;// 他要可以點擊
 }
