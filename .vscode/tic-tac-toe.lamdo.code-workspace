@@ -8,5 +8,28 @@
 		"eslint.validate": [
 			"typescript"
 		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "dev",
+				"command": "npm run dev",
+				"request": "launch",
+				"type": "node-terminal"
+			},
+			{
+				"name": "build",
+				"command": "npm run build",
+				"request": "launch",
+				"type": "node-terminal"
+			},
+			{
+				"name": "test-with-report",
+				"command": "npm run test-with-report",
+				"request": "launch",
+				"type": "node-terminal"
+			}
+		]
 	}
 }
