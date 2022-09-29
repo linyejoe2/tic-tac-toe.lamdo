@@ -1,3 +1,4 @@
+import { sound } from "@pixi/sound";
 import { IScenes } from "../interface/IScencs";
 import GameScenes from "../scenes/GameScenes";
 import { TScenes } from "../types";
@@ -76,6 +77,21 @@ export class ScenesManager {
       // 在 DOM 上繪製
       console.log(this._activeScenes);
       document.querySelector("#app")?.append(this._activeScenes.app.view);
+    }
+  }
+
+  public static toggleBgm(): void {
+    // 如果還沒有加入音樂，就加進去
+    if (!sound.exists("bgm")) {
+      sound.add("bgm", "./music/bgm.wav");
+    }
+    // 如果還沒開始撥放，就放，然後循環。
+    if (!sound.find("bgm").isPlaying) {
+      sound.find("bgm").play();
+      sound.find("bgm").loop = true;
+    } else {
+      // 已經在放了，就停。
+      sound.find("bgm").stop();
     }
   }
 }

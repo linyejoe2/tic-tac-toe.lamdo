@@ -20,3 +20,9 @@ scenesManager.activeScenes.app.ticker.add(() => {
   }
 })
 
+// 音樂相關
+let toggleBgmButton: HTMLButtonElement = document.getElementById("toggleButton") as HTMLButtonElement;
+toggleBgmButton.addEventListener("click", function () {
+  scenesManager.toggleBgm();
+  toggleBgmButton.value === "點我開啟音樂" ? toggleBgmButton.value = "點我停止撥放" : toggleBgmButton.value = "點我開啟音樂";
+});
