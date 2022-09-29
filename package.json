@@ -26,6 +26,8 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "pixi.js": "^6.5.3"
+    "@pixi/sound": "^5.0.0",
+    "howler": "^2.2.3",
+    "pixi.js": "^6.5.4"
   }
 }

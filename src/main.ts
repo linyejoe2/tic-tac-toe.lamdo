@@ -19,3 +19,4 @@ scenesManager.activeScenes.app.ticker.add(() => {
     scenesManager.activeScenes.element[0].render!(scenesManager.activeScenes.app);
   }
 })
+
