@@ -4,10 +4,6 @@ import EndGameScenes from "./scenes/EndGameScenes";
 import { ScenesManager } from "./system/ScenesManager";
 import GameScenes from "./scenes/GameScenes";
 import GameView from "./game/GameView";
-import {sound} from '@pixi/sound'
-
-sound.add('bgm','./music/bgm.mp3');
-sound.play('bgm');
 
 // 初始化場景管理員
 const scenesManager = ScenesManager;
@@ -30,3 +26,4 @@ toggleBgmButton.addEventListener("click", function () {
   scenesManager.toggleBgm();
   toggleBgmButton.value === "點我開啟音樂" ? toggleBgmButton.value = "點我停止撥放" : toggleBgmButton.value = "點我開啟音樂";
 });
+
