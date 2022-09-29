@@ -4,6 +4,10 @@ import EndGameScenes from "./scenes/EndGameScenes";
 import { ScenesManager } from "./system/ScenesManager";
 import GameScenes from "./scenes/GameScenes";
 import GameView from "./game/GameView";
+import {sound} from '@pixi/sound'
+
+sound.add('bgm','./music/bgm.mp3');
+sound.play('bgm');
 
 // 初始化場景管理員
 const scenesManager = ScenesManager;
@@ -19,4 +23,5 @@ scenesManager.activeScenes.app.ticker.add(() => {
     scenesManager.activeScenes.element[0].render!(scenesManager.activeScenes.app);
   }
 })
+
 
