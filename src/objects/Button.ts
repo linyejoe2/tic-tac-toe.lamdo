@@ -67,7 +67,6 @@ export class SettingButton extends GameObject {
       this.graph.getChildAt(0).y = this.graph.height / 2 - textTemp.height / 2;// 文字上下置中
     }
     this.graph.on("pointerdown", () => {
-      console.log(4);
       scenesManager.toggleBgm();
     });
 

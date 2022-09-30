@@ -90,9 +90,11 @@ export class ScenesManager {
     if (!sound.find("bgm").isPlaying) {
       sound.find("bgm").play();
       sound.find("bgm").loop = true;
+      console.log("BGM開始");
     } else {
       // 已經在放了，就停。
       sound.find("bgm").stop();
+      console.log("BGM關閉");
     }
   }
 }
