@@ -1,3 +1,4 @@
+import { Text } from "pixi.js";
 import { IButton } from "../interface/IGameObject";
 import { IScenes } from "../interface/IScencs";
 import { Button } from "../objects/Button";
@@ -38,6 +39,20 @@ describe('unit testing.', () => {
       expect(testButton.visible).toBeTruthy();
       testButton.visible = false;
       expect(testButton.visible).toBeFalsy();
+    });
+  });
+  describe('testing textObject', () => {
+    const testText = new TextObject(undefined, "this is a testText");
+    // 要有一個 pixi 文字物件。
+    it('should have a pixi.text proprity', () => {
+      expect(testText.text).toBeInstanceOf(Text);
+    });
+    // 要有一個位置
+    it('should have a position', () => {
+      expect(testText.position.x).toBeGreaterThanOrEqual(0);
+      expect(testText.position.y).toBeGreaterThanOrEqual(0);
+      expect(testText.position.x).toBeLessThanOrEqual(200);
+      expect(testText.position.y).toBeLessThanOrEqual(200);
     });
   });
   // 開始(選單)畫面
@@ -85,8 +100,8 @@ describe('unit testing.', () => {
       () => expect(testEndGameScenes).toHaveProperty('winner'));
 
     // 要有一個按鈕讓你回到主選單
-    it('should have a button use to go bace home scenes.', () => 
-      expect(testEndGameScenes.element).toEqual(expect.arrayContaining([expect.objectContaining({text:'回到主選單'})]))
+    it('should have a button use to go bace home scenes.', () =>
+      expect(testEndGameScenes.element).toEqual(expect.arrayContaining([expect.objectContaining({ text: '回到主選單' })]))
     );
 
     /**
@@ -105,7 +120,7 @@ describe('unit testing.', () => {
       // 圈圈贏
       it('should show circle win', () => {
         testEndGameScenes.winner = 1;
-        testEndGameScenes.render ();
+        testEndGameScenes.render();
         expect(testEndGameScenes.app.stage.children).toEqual(expect.arrayContaining([expect.objectContaining({
           text: WINTEXT.circleWin
         })]));
