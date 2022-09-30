@@ -22,13 +22,14 @@ scenesManager.activeScenes.app.ticker.add(() => {
 })
 
 // 音樂相關
+/*
 let toggleBgmButton: HTMLButtonElement = document.getElementById("toggleButton") as HTMLButtonElement;
-toggleBgmButton.addEventListener("click", function () {
+toggleBgmButton.addEventListener("pointerup", function () {
   scenesManager.toggleBgm();
-  toggleBgmButton.value === "點我開啟音樂" ? toggleBgmButton.value = "點我停止撥放" : toggleBgmButton.value = "點我開啟音樂";
+  toggleBgmButton.value === "BGM:ON" ? toggleBgmButton.value = "BGM:OFF" : toggleBgmButton.value = "BGM:ON";
 });
-
-document.addEventListener("click", function () {
+*/
+document.addEventListener("pointerup", function () {
   sound.add("bgm", "./music/bgm.wav");
   sound.play("bgm");
   sound.find("bgm").loop = true;
