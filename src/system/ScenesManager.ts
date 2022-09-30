@@ -84,7 +84,7 @@ export class ScenesManager {
     // 如果還沒有加入音樂，就加進去
     if (!sound.exists("bgm")) {
       sound.add("bgm", "./music/bgm.wav");
-      sound.resumeAll();
+      // sound.resumeAll();
     }
     // 如果還沒開始撥放，就放，然後循環。
     if (!sound.find("bgm").isPlaying) {
