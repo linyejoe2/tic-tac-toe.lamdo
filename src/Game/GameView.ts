@@ -2,15 +2,16 @@ import { Application, Graphics, Point } from "pixi.js";
 import { ChessBoard } from "./ChessBoard";
 import { IScenes } from "../interface/IScencs";
 import { IGameObject } from "../interface/IGameObject";
+import { GameObject } from "../objects/GameObject";
 
-export default class GameView implements IScenes{
+export default class GameView extends GameObject implements IScenes{
+  public graph: Graphics = new Graphics();
   public name: string;
   public app: Application;
   public winner?: number | undefined;
   public graphics: Graphics = new Graphics();
   public element: IGameObject[];
   public board: ChessBoard;
-  public position: Point;
   private _width: number;
   private _height: number;
   private bingoLineGraphics: Graphics = new Graphics();
@@ -20,8 +21,8 @@ export default class GameView implements IScenes{
     [new Graphics(), new Graphics(), new Graphics()],
   ];
   private nByn = 3;
-  constructor(position:Point,app: Application, isRobotMode: boolean) {
-    this.position = position;
+  constructor(position:number[] = [0,0],app: Application, isRobotMode: boolean) {
+    super();
     this.board = new ChessBoard(isRobotMode);
     this._height = app.screen.height;
     this._width = app.screen.width;
