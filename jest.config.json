@@ -1,0 +1,6 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "jsdom",
+  "coverageDirectory": "./coverage",
+  "setupFiles": ["jest-webgl-canvas-mock"]
+}

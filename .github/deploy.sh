@@ -1,45 +1,31 @@
 #!/usr/bin/env sh
 
-set -e
+set -e # 顯示錯誤資訊
 
 npm run build # 生成靜態檔案
 
 cd ./dist # 進入生成的資料夾
 
-# deploy to github
-# if [ -z "$GITHUB_TOKEN" ]; then
-
+# 設定 ssh-key 相關資訊
 mkdir -p ~/.ssh/
 echo "${GITHUB_TOKEN}" > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-msg='deploy'
-
+# 設定 git 相關資訊
+msg='來自 GitHub Actions 的自動部署。'
 githubUrl=git@github.com:linyejoe2/tic-tac-toe.lamdo.git
-
-# else
-
-#   msg='來自 github action 的自動部署。'
-
-#   githubUrl=https://linyejoe2:${GITHUB_TOKEN}@github.com/linyejoe2/tic-tac-toe.lamdo.git
-
 git config --global user.name "linyejoe2"
-
 git config --global user.email "linyejoe2@gmail.com"
 
-# fi
-
-
+# 建立一個臨時的 branch
 git init
-
 git add -A
-
 git commit -m "${msg}"
 
 # 推送到github
 git push -f $githubUrl master:release
 
+# 把 ./dist 的內容刪乾淨
 cd -
-
 rm -rf ./dist

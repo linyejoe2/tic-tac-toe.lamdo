@@ -1,4 +1,4 @@
-import IStrategy from "./IStrategy";
+import IStrategy from "../interface/IStrategy";
 import { RandomStrategy } from "./RandomStrategy";
 
 //機器人 aka 智慧代理人(agent)，用來做動作的 哈

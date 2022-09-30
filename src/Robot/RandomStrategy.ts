@@ -1,5 +1,4 @@
-import IStrategy from "./IStrategy";
-
+import IStrategy from "../interface/IStrategy";
 export class RandomStrategy implements IStrategy {
   public name = "random";
   environment: number[][];
