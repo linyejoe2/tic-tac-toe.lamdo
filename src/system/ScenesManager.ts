@@ -63,7 +63,8 @@ export class ScenesManager {
   public static ChangeScenes(name: TScenes): void {
     if (!this._scenesMap) return;
     if (this._scenesMap.has(name)) {
-      if (name === "GameScenes") this._scenesMap.set("GameScenes", new GameScenes());
+      if (name === "GameScenes") this._scenesMap.set("GameScenes", new GameScenes(false));
+      if (name === "GameScenesWithRobot") this._scenesMap.set("GameScenesWithRobot", new GameScenes(true));
       // if (name === "MenuScenes") this._scenesMap.set("MenuScenes", new MenuScenes());
       // if (name === "EndGameScenes") this._scenesMap.set("EndGameScenes", new EndGameScenes());
       // 刪除 DOM 上原本的場景
