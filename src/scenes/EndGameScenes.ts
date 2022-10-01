@@ -1,4 +1,4 @@
-import { Button } from "../objects/Button";
+import { Button,SettingButton } from "../objects/Button";
 import { IGameObject } from "../interface/IGameObject";
 import { TextObject } from "../objects/TextObject";
 import Scnens from "./Scenes";
@@ -16,6 +16,8 @@ export default class extends Scnens {
   constructor() {
     super();
     this.element = [new Button("回到主選單", [85, 130], "MenuScenes")];
+    //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
+    this.element.push(new SettingButton([10,180],"BGM ON/OFF"));
   }
 
   /**
