@@ -1,6 +1,5 @@
 import { IGameObject } from "../interface/IGameObject";
 import Scnens from "./Scenes";
-import { Button ,SettingButton } from "../objects/Button";
 import GameView from "../game/GameView";
 
 /**

@@ -2,7 +2,6 @@ import { Graphics } from "pixi.js"
 import { GameObject } from "./GameObject";
 import { Text } from 'pixi.js';
 import { ScenesManager } from "../system/ScenesManager";
-import { sound } from "@pixi/sound";
 const scenesManager = ScenesManager;
 export class Button extends GameObject {
   graph;

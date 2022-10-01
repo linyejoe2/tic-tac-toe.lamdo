@@ -259,35 +259,42 @@ export default class GameView extends GameObject implements IScenes {
     const x = temp[0] as number;
     const y = temp[1] as number;
     const board = temp[2] as ChessBoard;
-    const graphic = temp[3] as Graphics;
+    const chessView = temp[3] as Graphics;
     const gameView = temp[4] as GameView;
     //1是O，2是X
     if (board.chesses[y][x] == 0) {
       if (board.currentPlayer == 1) {
-        //graphic.beginFill(0xff0000);
-        graphic.lineStyle(1, 0xff0000, 0.25);
-        graphic.drawCircle(
+        chessView.lineStyle(1, 0xff0000, 0.25);
+        chessView.drawCircle(
           gameView._width / 6,
           gameView._height / 6,
           Math.sqrt(gameView._width + gameView._height)
         );
-        graphic.endFill();
+        chessView.endFill();
       } else if (board.currentPlayer == 2) {
         const lineWidth = 1;
-        graphic.beginFill(0x000fff, 0.25);
-        graphic.drawPolygon(
+        chessView.beginFill(0x000fff, 0.25);
+        chessView.drawPolygon(
           new Point(lineWidth, 0),
           new Point(gameView._width / 3 + lineWidth, gameView._height / 3),
           new Point(gameView._width / 3, gameView._height / 3 + lineWidth),
           new Point(0, lineWidth)
         );
-        graphic.drawPolygon(
+        chessView.drawPolygon(
           new Point(gameView._width / 3 - lineWidth, 0),
           new Point(gameView._width / 3, lineWidth),
           new Point(0, gameView._height / 3 + lineWidth),
           new Point(0, gameView._height / 3 - lineWidth)
         );
-        graphic.endFill();
+        chessView.endFill();
+        // chessView.beginFill(0x000fff, 0.25);
+        // chessView.drawPolygon(
+        //   new Point(gameView._width / 3 - lineWidth, 0),
+        //   new Point(gameView._width / 3, lineWidth),
+        //   new Point(0, gameView._height / 3 + lineWidth),
+        //   new Point(0, gameView._height / 3 - lineWidth)
+        // );
+        // chessView.endFill();
       }
     }
   }
@@ -301,6 +308,7 @@ export default class GameView extends GameObject implements IScenes {
     graphic.clear();
     gameView.DrawSlot(x, y);
   }
+
   //畫線
   public DrawTicTacToeLine(): void {
     //用格數分成三等分
