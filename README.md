@@ -2,5 +2,5 @@
 
 this is a Tic-Tac-Toe (aka OOXX) game depoly on web.
 
-hope u guys enjoy it~
+hope u guys enjoy it~<br>
 https://linyejoe2.github.io/tic-tac-toe.lamdo/
