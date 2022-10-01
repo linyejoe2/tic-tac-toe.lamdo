@@ -5,7 +5,6 @@ import { ScenesManager } from "./system/ScenesManager";
 import GameScenes from "./scenes/GameScenes";
 import GameView from "./game/GameView";
 import { sound } from "@pixi/sound";
-import { Application } from "pixi.js";
 
 // 初始化場景管理員
 const scenesManager = ScenesManager;

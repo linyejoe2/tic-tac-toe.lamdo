@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build --base=/tic-tac-toe.lamdo/",
+    "build2": "tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
     "test-with-report": "jest --coverage",
