@@ -26,8 +26,8 @@ export default class GameView extends GameObject implements IScenes {
   constructor(app: Application, isRobotMode: boolean) {
     super();
     this.board = new ChessBoard(isRobotMode);
-    this._height = app.screen.height;
-    this._width = app.screen.width;
+    this._height = app.screen.height*0.85;
+    this._width = app.screen.width*0.85;
     this.app = app;
     this.element = [];
     this.name = "";
