@@ -14,6 +14,17 @@ export default class GameView extends GameObject {
   public board: ChessBoard;
   private _width: number;
   private _height: number;
+  private _delay = 1000;
+  private _setChessDelayScale = 1;
+  private _drawLineDelayScale = 1.4;
+  private _endGameDelayScale = 1.8;
+  private _bingoLineColor = 0xffffff;//老白線寶了
+  private _slotColor = 0x366178;//底色
+  private _lineColor = 0x92C3DD;//邊線色
+  private _circleColor = 0x5A8AA4;//圈圈486F84
+  private _crossColor = 0x76A7C1;//叉叉
+  private _transparent = 0.75;
+  private _chessSize :number;
   private bingoLineGraphics: Graphics = new Graphics();
   private chessesView: Graphics[][] = [
     [new Graphics(), new Graphics(), new Graphics()],
@@ -26,6 +37,7 @@ export default class GameView extends GameObject {
     this.board = new ChessBoard(isRobotMode);
     this._height = 120;
     this._width = 120;
+    this._chessSize = Math.sqrt(this._width + this._height);
     this.element = [];
     this.name = "";
     this.SetEventOnChessBoard();
@@ -54,7 +66,7 @@ export default class GameView extends GameObject {
           ScenesManager.get("EndGameScenes")!.winner = 0;
           ScenesManager.ChangeScenes("EndGameScenes");
           return;
-        }, 500)
+        },  this._delay * this._endGameDelayScale)
       }
       console.log("平手，嫩");
     };
@@ -62,25 +74,25 @@ export default class GameView extends GameObject {
     //有人贏啦
     //當玩家勝利時會呼叫這個funciton，並從參數傳入勝利者 1為O 2為X
     //還沒加入勝利者在第幾排
-    this.board.PlayerWon.push((winner: number) => {
+    this.board.PlayerWon.push(async (winner: number) => {
+      this.SetAllButtonActivate(false);
       if (ScenesManager.get("EndGameScenes")) {
         setTimeout(() => {
           ScenesManager.add(new EndGameScenes);
           ScenesManager.get("EndGameScenes")!.winner = winner;
           ScenesManager.ChangeScenes("EndGameScenes");
           return;
-        }, 500)
+        }, this._delay*this._endGameDelayScale)
       }
       //贏了要把按鈕都disable，防止偷按
-      console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
-      this.SetAllButtonActivate(false);
+      //console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
       //把bingo線都拿出來畫，哈
-      console.log(this.board.bingoLines);
+      //console.log(this.board.bingoLines);
 
-      const color = 0x089487;
       const lineWidth = 3;
 
-      this.bingoLineGraphics.beginFill(color);
+      this.bingoLineGraphics.beginFill(this._bingoLineColor);
+      await new Promise(f => setTimeout(f,  this._delay*this._drawLineDelayScale));
       //橫線
       if (this.board.bingoLines[0] >= 0) {
         this.bingoLineGraphics.drawRect(
@@ -123,9 +135,9 @@ export default class GameView extends GameObject {
     //棋盤更新，通常是被機器人更新的，哈
     this.board.Update = async () => {
       this.SetAllButtonActivate(false);
-      await new Promise(f => setTimeout(f, 1000));
-      this.SetAllButtonActivate(true);
+      await new Promise(f => setTimeout(f,  this._delay*this._setChessDelayScale));
       this.DrawSlot(this.board.lastX, this.board.lastY);
+      this.SetAllButtonActivate(true);
       return;
     };
   }
@@ -178,37 +190,28 @@ export default class GameView extends GameObject {
   }
 
   public DrawSlot(x: number, y: number) {
-    this.chessesView[y][x].beginFill(0x666666);
-    //this.chesses[y][x].angle = 45;
+    this.chessesView[y][x].beginFill(this._slotColor);
     this.chessesView[y][x].drawRect(0, 0, this._width / 3, this._height / 3);
     this.chessesView[y][x].endFill();
-    const lineWidth = 1;
     switch (this.board.chesses[y][x]) {
       case 0:
         break;
       case 1:
-        this.chessesView[y][x].lineStyle(1, 0xff0000, 1);
+        this.chessesView[y][x].lineStyle(1, this._circleColor, 1);
         this.chessesView[y][x].drawCircle(
           this._width / 6,
           this._height / 6,
-          Math.sqrt(this._width + this._height)
+          this._chessSize
         );
         this.chessesView[y][x].endFill();
         break;
       case 2:
-        this.chessesView[y][x].beginFill(0x000fff, 1);
-        this.chessesView[y][x].drawPolygon(
-          new Point(lineWidth, 0),
-          new Point(this._width / 3 + lineWidth, this._height / 3),
-          new Point(this._width / 3, this._height / 3 + lineWidth),
-          new Point(0, lineWidth)
-        );
-        this.chessesView[y][x].drawPolygon(
-          new Point(this._width / 3 - lineWidth, 0),
-          new Point(this._width / 3, lineWidth),
-          new Point(0, this._height / 3 + lineWidth),
-          new Point(0, this._height / 3 - lineWidth)
-        );
+        this.chessesView[y][x].lineStyle(1, this._crossColor, 1);
+        
+        this.chessesView[y][x].moveTo(this._chessSize/2,this._chessSize/2)
+        .lineTo(this._width/3 - this._chessSize/2,this._height / 3 - this._chessSize/2)//左上到右下的線
+        .moveTo(this._width/3 - this._chessSize/2,this._chessSize/2)
+        .lineTo(this._chessSize/2,this._height/3-this._chessSize/2);//右上到左下的線
         this.chessesView[y][x].endFill();
         break;
       default:
@@ -222,33 +225,27 @@ export default class GameView extends GameObject {
     const y = temp[1] as number;
     const chessView = temp[2] as Graphics;
     const gameView = temp[3] as GameView;
-
+    chessView.clear();
+    
     gameView.board.SetChess(x, y);
     if (gameView.board.chesses[y][x] == 1) {
-      chessView.lineStyle(1, 0xff0000, 1);
+      chessView.lineStyle(1, this._circleColor, 1);
       chessView.drawCircle(
         gameView._width / 6,
         gameView._height / 6,
-        Math.sqrt(gameView._width + gameView._height)
+        this._chessSize
+        //Math.sqrt(gameView._width + gameView._height)
       );
       chessView.endFill();
     } else if (gameView.board.chesses[y][x] == 2) {
-      const lineWidth = 1;
-      chessView.beginFill(0x000fff, 1);
-      chessView.drawPolygon(
-        new Point(lineWidth, 0),
-        new Point(gameView._width / 3 + lineWidth, gameView._height / 3),
-        new Point(gameView._width / 3, gameView._height / 3 + lineWidth),
-        new Point(0, lineWidth)
-      );
-      chessView.drawPolygon(
-        new Point(gameView._width / 3 - lineWidth, 0),
-        new Point(gameView._width / 3, lineWidth),
-        new Point(0, gameView._height / 3 + lineWidth),
-        new Point(0, gameView._height / 3 - lineWidth)
-      );
+      chessView.lineStyle(1, this._crossColor, 1);
+      chessView.moveTo(this._chessSize/2,this._chessSize/2)
+              .lineTo(this._width/3 - this._chessSize/2,this._height / 3 - this._chessSize/2)//左上到右下的線
+              .moveTo(this._width/3 - this._chessSize/2,this._chessSize/2)
+              .lineTo(this._chessSize/2,this._height/3-this._chessSize/2);//右上到左下的線
       chessView.endFill();
     }
+    gameView.DrawSlot(x, y);
   }
 
   private MoveOnChess(): void {
@@ -261,7 +258,7 @@ export default class GameView extends GameObject {
     //1是O，2是X
     if (board.chesses[y][x] == 0) {
       if (board.currentPlayer == 1) {
-        chessView.lineStyle(1, 0xff0000, 0.25);
+        chessView.lineStyle(1, gameView._circleColor, gameView._transparent);
         chessView.drawCircle(
           gameView._width / 6,
           gameView._height / 6,
@@ -269,29 +266,12 @@ export default class GameView extends GameObject {
         );
         chessView.endFill();
       } else if (board.currentPlayer == 2) {
-        const lineWidth = 1;
-        chessView.beginFill(0x000fff, 0.25);
-        chessView.drawPolygon(
-          new Point(lineWidth, 0),
-          new Point(gameView._width / 3 + lineWidth, gameView._height / 3),
-          new Point(gameView._width / 3, gameView._height / 3 + lineWidth),
-          new Point(0, lineWidth)
-        );
-        chessView.drawPolygon(
-          new Point(gameView._width / 3 - lineWidth, 0),
-          new Point(gameView._width / 3, lineWidth),
-          new Point(0, gameView._height / 3 + lineWidth),
-          new Point(0, gameView._height / 3 - lineWidth)
-        );
+        chessView.lineStyle(1, gameView._circleColor, gameView._transparent);
+        chessView.moveTo(gameView._chessSize/2,gameView._chessSize/2)
+                .lineTo(gameView._width/3 - gameView._chessSize/2,gameView._height / 3 - gameView._chessSize/2)//左上到右下的線
+                .moveTo(gameView._width/3 - gameView._chessSize/2,gameView._chessSize/2)
+                .lineTo(gameView._chessSize/2,gameView._height/3-gameView._chessSize/2);//右上到左下的線
         chessView.endFill();
-        // chessView.beginFill(0x000fff, 0.25);
-        // chessView.drawPolygon(
-        //   new Point(gameView._width / 3 - lineWidth, 0),
-        //   new Point(gameView._width / 3, lineWidth),
-        //   new Point(0, gameView._height / 3 + lineWidth),
-        //   new Point(0, gameView._height / 3 - lineWidth)
-        // );
-        // chessView.endFill();
       }
     }
   }
@@ -311,8 +291,7 @@ export default class GameView extends GameObject {
     //用格數分成三等分
     const widthPart: number = this._width / this.nByn;
     const heightPart: number = this._height / this.nByn;
-    const color = 0xffffff;
-    this.graphics.beginFill(color);
+    this.graphics.beginFill(this._lineColor);
     for (let i = 0; i < this.nByn; i++) {
       this.graphics.drawRect(0, heightPart * i, widthPart * this.nByn, 1);
       this.graphics.drawRect(widthPart * i, 0, 1, heightPart * this.nByn);
@@ -327,15 +306,9 @@ export default class GameView extends GameObject {
 
     this.graphics.endFill();
   }
-  /*
-  public render(app: Application) {
-    app.stage.addChild(this.graphics);
-    app.stage.addChild(this.bingoLineGraphics);
-  }*/
   public render(): void {
     this.graph.addChild(this.graphics);
     this.graph.addChild(this.bingoLineGraphics);
-    // resizer(this.app);
     if (this.element[0] instanceof GameView) {
       this.element[0].render!();
     }
