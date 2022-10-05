@@ -9,7 +9,6 @@ export class ChessBoard {
   public nByn = 3;
   public lines: number[][] = [];
   public agent: Agent;
-  public currentPlayer = 1;
   public lastX = -1;
   public lastY = -1;
   //from to
@@ -33,20 +32,23 @@ export class ChessBoard {
   public Update!: BoardUpdateEvent;
   //這是一個很醜的function
   //包含了設定棋子，勝利判定，平手判定，跟機器人下棋
-  SetChess(x: number, y: number): boolean {
+  SetChess(x: number, y: number, curr: number, first: number): boolean {
+    // console.log('first1:' + this.firstPlayer);
     //已經被按過了
     if (this.chesses[y][x] != 0) return false;
     this.lastX = x;
     this.lastY = y;
     //玩家下棋先處理
-    this.chesses[y][x] = this.currentPlayer;
+    this.chesses[y][x] = curr;
     const hasWinner = this.CheckAll().findIndex((element) => element == true);
     if (hasWinner >= 0) {
       return true;
     }
-    this.currentPlayer = this.currentPlayer == 1 ? 2 : 1;
+    curr = (curr == 1 ? 2 : 1);
     //是機器人模式，而且接下來是機器人的回合
-    if (this.isRobotMode && this.currentPlayer == 2) {
+    // console.log('curr:' + curr);
+    // console.log('first:' + this.firstPlayer);
+    if (this.isRobotMode && curr != first) {
       //更新機器人所看到的環境
       this.agent.UpdateEnvironment(this.chesses);
       console.log("機器人下棋中");
@@ -54,13 +56,13 @@ export class ChessBoard {
       const position = this.agent.PickPosition();
       //機器人下棋
       if (!position) return false;
-      this.chesses[position[1]][position[0]] = 2;
+      this.chesses[position[1]][position[0]] = curr;
       this.lastX = position[0];
       this.lastY = position[1];
       this.Update();
       const hasWinner = this.CheckAll().findIndex((element) => element == true);
       if (hasWinner > 0) return true;
-      this.currentPlayer = 1;
+      curr = (curr == 1 ? 2 : 1);
       return true;
     }
 

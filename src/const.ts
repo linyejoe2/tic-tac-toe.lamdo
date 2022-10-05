@@ -9,3 +9,9 @@ export const APPSIZE = {
   width: 200,
   height: 200
 }
+
+export const CHOSECHESTTEXT = {
+  title: "快選一個角色😡😡",
+  choseCircle: "選⭕好了",
+  choseFork: "還是選❌好了",
+}

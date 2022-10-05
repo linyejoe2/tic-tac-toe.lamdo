@@ -1,5 +1,4 @@
 import { Application } from "pixi.js";
-import { Button } from "../objects/Button";
 import { IGameObject } from "./IGameObject";
 
 export interface IScenes {
@@ -11,8 +10,8 @@ export interface IScenes {
 }
 
 export interface IChoseChestScenes {
-  // 我要當圈圈，我要當叉叉，我想看他們自己玩
-  element: [Button, Button, Button],
+  // 我要當圈圈，我要當叉叉
+  element: IGameObject[],
   name: string,
   app: Application,
   render(): void

@@ -14,9 +14,9 @@ export default class extends Scnens {
    * 初始化場景，塞入我預先想好想塞的所有物件
    * 其中包含按鈕( Button )以及文字( TextoObject )
    */
-  constructor(isRobotMode: boolean) {
+  constructor(isRobotMode: boolean, firstPlayer: number) {
     super()
-    this.element = [new GameView(isRobotMode,[40,30])];
+    this.element = [new GameView(isRobotMode, [40, 30], firstPlayer)];
     this.element.push(new ToggleMusicButton([10, 170]));
   }
 }

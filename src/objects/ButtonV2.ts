@@ -24,11 +24,11 @@ export class ButtonV2 extends GameObject {
     super();
     this.position = {
       x: position[0] - size[0] / 2,
-      y: position[1] - size[0] / 2
+      y: position[1] - size[1] / 2
     };
     this.graph = new Graphics();
     this.graph.beginFill(0x213547);
-    this.graph.drawRoundedRect(0, 0, 40, 15, 2);
+    this.graph.drawRoundedRect(0, 0, size[0], size[1], 2);
     this.graph.endFill();
     this.graph.interactive = true;// 響應交互
     this.graph.buttonMode = true;// 滑鼠會變成點擊

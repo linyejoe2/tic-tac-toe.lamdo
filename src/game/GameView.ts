@@ -12,6 +12,8 @@ export default class GameView extends GameObject {
   public graphics: Graphics = new Graphics();
   public element: IGameObject[];
   public board: ChessBoard;
+  public currentPlayer: number;
+  public firstPlayer: number;
   private _width: number;
   private _height: number;
   private _delay = 1000;
@@ -32,9 +34,11 @@ export default class GameView extends GameObject {
     [new Graphics(), new Graphics(), new Graphics()],
   ];
   private nByn = 3;
-  constructor(isRobotMode: boolean, position: number[] = [0, 0]) {
+  constructor(isRobotMode: boolean, position: number[] = [0, 0], _firstPlayer: number) {
     super(position);
     this.board = new ChessBoard(isRobotMode);
+    this.currentPlayer = _firstPlayer;
+    this.firstPlayer = _firstPlayer
     this._height = 120;
     this._width = 120;
     this._chessSize = Math.sqrt(this._width + this._height);
@@ -227,7 +231,7 @@ export default class GameView extends GameObject {
     const gameView = temp[3] as GameView;
     chessView.clear();
 
-    gameView.board.SetChess(x, y);
+    gameView.board.SetChess(x, y, this.currentPlayer, this.firstPlayer);
     if (gameView.board.chesses[y][x] == 1) {
       chessView.lineStyle(1, this._circleColor, 1);
       chessView.drawCircle(
@@ -257,7 +261,7 @@ export default class GameView extends GameObject {
     const gameView = temp[4] as GameView;
     //1是O，2是X
     if (board.chesses[y][x] == 0) {
-      if (board.currentPlayer == 1) {
+      if (this.currentPlayer == 1) {
         chessView.lineStyle(1, gameView._circleColor, gameView._transparent);
         chessView.drawCircle(
           gameView._width / 6,
@@ -265,7 +269,7 @@ export default class GameView extends GameObject {
           Math.sqrt(gameView._width + gameView._height)
         );
         chessView.endFill();
-      } else if (board.currentPlayer == 2) {
+      } else if (this.currentPlayer == 2) {
         chessView.lineStyle(1, gameView._circleColor, gameView._transparent);
         chessView.moveTo(gameView._chessSize / 2, gameView._chessSize / 2)
           .lineTo(gameView._width / 3 - gameView._chessSize / 2, gameView._height / 3 - gameView._chessSize / 2)//左上到右下的線
