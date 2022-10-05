@@ -98,4 +98,12 @@ export class ScenesManager {
       console.log("BGM關閉");
     }
   }
+
+  /**
+   * 獲得音樂撥放狀態
+   * @returns 有沒有在撥放
+   */
+  public static bgmStatus(): boolean {
+    return sound.find("bgm").isPlaying;
+  }
 }

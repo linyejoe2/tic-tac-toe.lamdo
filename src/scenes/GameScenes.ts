@@ -18,7 +18,7 @@ export default class extends Scnens {
     this.element = [new GameView(this.app, isRobotMode)];
     //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
     //this.element = [new GameView([100, 100])];
-    //this.element=[new SettingButton([10,180],"BGM ON/OFF")];
+    //this.element=[new ToggleMusicButton([10,180],"BGM ON/OFF")];
     // this.element = [new Button([45, 130], "跟朋友一起玩", "GameScenes")];
   }
 

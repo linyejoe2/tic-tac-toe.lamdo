@@ -1,8 +1,8 @@
-import { Application, Graphics, Text } from "pixi.js";
+import { Application, Graphics, Sprite, Text, Texture } from "pixi.js";
 import { Chesses, Vector } from "../types";
 
 export interface IGameObject {
-  graph?: Graphics;// 他可能會是圖像物件
+  graph?: Graphics | Texture | Sprite;// 他可能會是圖像物件
   text?: Text | string;// 他可能會是文字物件
   position: Vector;// 物件的位置
   visible?: boolean;// 他看不看的到
