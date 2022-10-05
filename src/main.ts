@@ -11,7 +11,7 @@ const scenesManager = ScenesManager;
 // 導入場景
 scenesManager.add(new MenuScenes());// 開始畫面
 scenesManager.add(new GameScenes(false));// 2P遊戲畫面
-scenesManager.add(new GameScenes(true),"GameScenesWithRobot");// 1P遊戲畫面
+scenesManager.add(new GameScenes(true), "GameScenesWithRobot");// 1P遊戲畫面
 scenesManager.add(new EndGameScenes());// 結尾畫面
 
 scenesManager.ChangeScenes("MenuScenes");
@@ -42,4 +42,3 @@ document.addEventListener("pointerup", async function () {
   sound.find("bgm").loop = true;
   // 只做一次
 }, { once: true });
-

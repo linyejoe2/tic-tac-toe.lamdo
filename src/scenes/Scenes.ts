@@ -2,6 +2,7 @@ import { Application } from "pixi.js";
 import { IGameObject } from "../interface/IGameObject";
 import { IScenes } from "../interface/IScencs";
 import renderer from "../system/renderer";
+import resizer from "../system/resizer";
 
 /**
  * 場景抽象類別 
@@ -16,7 +17,7 @@ export default abstract class implements IScenes {
       width: 200,// 寬度
       height: 200,// 高度
       resolution: 4,// 放大倍數
-      backgroundColor: 0x22516b// 畫布背景顏色
+      backgroundColor: 0x22516b,// 畫布背景顏色
     })
   }
 
@@ -25,8 +26,8 @@ export default abstract class implements IScenes {
    */
   public render(): void {
     this.app.stage.destroy;
-    for (const ele of this.element) {
-      renderer(this.app, ele);
-    }
+    // renderer(this.app, this.element);
+    resizer(this.app, this.element);
+    document.querySelector("#app")?.append(this.app.view);
   }
 }

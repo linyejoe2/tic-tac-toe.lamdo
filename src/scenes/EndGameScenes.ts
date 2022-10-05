@@ -45,8 +45,6 @@ export default class extends Scnens {
         this.element.push(new TextObject([100, 70], WINTEXT.default));
         break;
     }
-    for (const ele of this.element) {
-      renderer(this.app, ele);
-    }
+    renderer(this.app, this.element);
   }
 }
