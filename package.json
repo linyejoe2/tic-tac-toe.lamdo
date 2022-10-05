@@ -11,6 +11,7 @@
     "test": "jest",
     "test-with-report": "jest --coverage",
     "lint": "eslint . --ext .ts",
+    "lint-with-auto-fix": "eslint . --ext .ts --fix",
     "deploy": "bash ./.github/deploy.sh"
   },
   "devDependencies": {
@@ -19,6 +20,7 @@
     "@typescript-eslint/parser": "^5.37.0",
     "canvas": "^2.10.1",
     "eslint": "^8.23.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^29.0.3",
     "jest-environment-jsdom": "^29.0.3",
     "jest-webgl-canvas-mock": "^0.2.3",

@@ -1,8 +1,4 @@
-import { Application, autoDetectRenderer, Graphics, RenderTexture, Sprite, Texture } from "pixi.js";
-import { GameObject } from "../objects/GameObject";
-import { IGameObject } from "../interface/IGameObject";
-import { TextObject } from "../objects/TextObject";
-import renderer from "../system/renderer";
+import { Application } from "pixi.js";
 import { APPSIZE } from "../const";
 
 /**
@@ -10,8 +6,8 @@ import { APPSIZE } from "../const";
  * @param app 要修正的畫布
  */
 export default function (app: Application): void {
-  let size = [APPSIZE.width, APPSIZE.height];
-  let ratio = size[0] / size[1];
+  const size = [APPSIZE.width, APPSIZE.height];
+  const ratio = size[0] / size[1];
 
   function resize() {
     let w: number;

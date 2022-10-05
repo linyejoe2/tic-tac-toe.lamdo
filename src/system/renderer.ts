@@ -1,4 +1,4 @@
-import { Application, Graphics } from "pixi.js";
+import { Application } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
 import { IGameObject } from "../interface/IGameObject";
 import { TextObject } from "../objects/TextObject";
@@ -9,7 +9,7 @@ import { TextObject } from "../objects/TextObject";
  * @param objs 要渲染的物件們
  */
 export default function (app: Application, objs: IGameObject[]) {
-  for (let ele of objs) {
+  for (const ele of objs) {
     if (ele.visible === true) {
       if (ele instanceof GameObject) {
         app.stage.addChild(ele.graph);

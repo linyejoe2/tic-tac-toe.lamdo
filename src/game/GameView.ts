@@ -1,11 +1,9 @@
-import { Application, Graphics, Point } from "pixi.js";
+import { Graphics, Point } from "pixi.js";
 import { ChessBoard } from "./ChessBoard";
-import { IScenes } from "../interface/IScencs";
 import { IGameObject } from "../interface/IGameObject";
 import { GameObject } from "../objects/GameObject";
 import { ScenesManager } from "../system/ScenesManager";
 import EndGameScenes from "../scenes/EndGameScenes";
-import resizer from "../system/resizer";
 
 export default class GameView extends GameObject {
   public graph: Graphics = new Graphics();
