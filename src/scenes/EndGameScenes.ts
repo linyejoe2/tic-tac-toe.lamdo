@@ -5,6 +5,7 @@ import Scnens from "./Scenes";
 import renderer from "../system/renderer";
 import { WINTEXT } from "../const";
 import { ToggleMusicButton } from "../objects/ToggleMusicButton";
+import resizer from "../system/resizer";
 
 /**
  * 結束場景
@@ -46,5 +47,7 @@ export default class extends Scnens {
         break;
     }
     renderer(this.app, this.element);
+    resizer(this.app);
+    document.querySelector("#app")?.append(this.app.view);
   }
 }

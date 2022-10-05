@@ -17,7 +17,7 @@ export default function (app: Application): void {
     let w: number;
     let h: number;
     const iw = window.innerWidth - 64;
-    const ih = window.innerHeight - 64;
+    const ih = window.innerHeight - 74;
     if (iw / ih >= ratio) {
       w = ih * ratio;
       h = ih;

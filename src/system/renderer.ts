@@ -19,4 +19,5 @@ export default function (app: Application, objs: IGameObject[]) {
       }
     }
   }
+  app.render();
 }
