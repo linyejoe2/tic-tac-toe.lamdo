@@ -34,8 +34,12 @@ toggleBgmButton.addEventListener("pointerup", function () {
   */
 document.addEventListener("pointerup", async function () {
 
+  // 加入音樂
   sound.add("bgm", "./music/bgm.mp3");
+  // 播放
   await sound.play("bgm");
+  // 循環
   sound.find("bgm").loop = true;
+  // 只做一次
 }, { once: true });
 
