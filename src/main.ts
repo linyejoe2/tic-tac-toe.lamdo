@@ -16,7 +16,7 @@ scenesManager.add(new GameScenes(false));// 2P遊戲畫面
 scenesManager.add(new GameScenes(true), "GameScenesWithRobot");// 1P遊戲畫面
 scenesManager.add(new EndGameScenes());// 結尾畫面
 
-scenesManager.ChangeScenes("ChoseChestScenes");
+scenesManager.ChangeScenes("MenuScenes");
 // 設定初始場景
 scenesManager.activeScenes.app.ticker.add(() => {
   if (scenesManager.activeScenes.element[0] instanceof GameView) {
