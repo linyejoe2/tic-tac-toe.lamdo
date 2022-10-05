@@ -24,7 +24,7 @@ export default class GameView extends GameObject {
   private _circleColor = 0x5A8AA4;//圈圈486F84
   private _crossColor = 0x76A7C1;//叉叉
   private _transparent = 0.75;
-  private _chessSize :number;
+  private _chessSize: number;
   private bingoLineGraphics: Graphics = new Graphics();
   private chessesView: Graphics[][] = [
     [new Graphics(), new Graphics(), new Graphics()],
@@ -66,7 +66,7 @@ export default class GameView extends GameObject {
           ScenesManager.get("EndGameScenes")!.winner = 0;
           ScenesManager.ChangeScenes("EndGameScenes");
           return;
-        },  this._delay * this._endGameDelayScale)
+        }, this._delay * this._endGameDelayScale)
       }
       console.log("平手，嫩");
     };
@@ -82,7 +82,7 @@ export default class GameView extends GameObject {
           ScenesManager.get("EndGameScenes")!.winner = winner;
           ScenesManager.ChangeScenes("EndGameScenes");
           return;
-        }, this._delay*this._endGameDelayScale)
+        }, this._delay * this._endGameDelayScale)
       }
       //贏了要把按鈕都disable，防止偷按
       //console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
@@ -92,7 +92,7 @@ export default class GameView extends GameObject {
       const lineWidth = 3;
 
       this.bingoLineGraphics.beginFill(this._bingoLineColor);
-      await new Promise(f => setTimeout(f,  this._delay*this._drawLineDelayScale));
+      await new Promise(f => setTimeout(f, this._delay * this._drawLineDelayScale));
       //橫線
       if (this.board.bingoLines[0] >= 0) {
         this.bingoLineGraphics.drawRect(
@@ -135,7 +135,7 @@ export default class GameView extends GameObject {
     //棋盤更新，通常是被機器人更新的，哈
     this.board.Update = async () => {
       this.SetAllButtonActivate(false);
-      await new Promise(f => setTimeout(f,  this._delay*this._setChessDelayScale));
+      await new Promise(f => setTimeout(f, this._delay * this._setChessDelayScale));
       this.DrawSlot(this.board.lastX, this.board.lastY);
       this.SetAllButtonActivate(true);
       return;
@@ -207,11 +207,11 @@ export default class GameView extends GameObject {
         break;
       case 2:
         this.chessesView[y][x].lineStyle(1, this._crossColor, 1);
-        
-        this.chessesView[y][x].moveTo(this._chessSize/2,this._chessSize/2)
-        .lineTo(this._width/3 - this._chessSize/2,this._height / 3 - this._chessSize/2)//左上到右下的線
-        .moveTo(this._width/3 - this._chessSize/2,this._chessSize/2)
-        .lineTo(this._chessSize/2,this._height/3-this._chessSize/2);//右上到左下的線
+
+        this.chessesView[y][x].moveTo(this._chessSize / 2, this._chessSize / 2)
+          .lineTo(this._width / 3 - this._chessSize / 2, this._height / 3 - this._chessSize / 2)//左上到右下的線
+          .moveTo(this._width / 3 - this._chessSize / 2, this._chessSize / 2)
+          .lineTo(this._chessSize / 2, this._height / 3 - this._chessSize / 2);//右上到左下的線
         this.chessesView[y][x].endFill();
         break;
       default:
@@ -226,7 +226,7 @@ export default class GameView extends GameObject {
     const chessView = temp[2] as Graphics;
     const gameView = temp[3] as GameView;
     chessView.clear();
-    
+
     gameView.board.SetChess(x, y);
     if (gameView.board.chesses[y][x] == 1) {
       chessView.lineStyle(1, this._circleColor, 1);
@@ -239,10 +239,10 @@ export default class GameView extends GameObject {
       chessView.endFill();
     } else if (gameView.board.chesses[y][x] == 2) {
       chessView.lineStyle(1, this._crossColor, 1);
-      chessView.moveTo(this._chessSize/2,this._chessSize/2)
-              .lineTo(this._width/3 - this._chessSize/2,this._height / 3 - this._chessSize/2)//左上到右下的線
-              .moveTo(this._width/3 - this._chessSize/2,this._chessSize/2)
-              .lineTo(this._chessSize/2,this._height/3-this._chessSize/2);//右上到左下的線
+      chessView.moveTo(this._chessSize / 2, this._chessSize / 2)
+        .lineTo(this._width / 3 - this._chessSize / 2, this._height / 3 - this._chessSize / 2)//左上到右下的線
+        .moveTo(this._width / 3 - this._chessSize / 2, this._chessSize / 2)
+        .lineTo(this._chessSize / 2, this._height / 3 - this._chessSize / 2);//右上到左下的線
       chessView.endFill();
     }
     gameView.DrawSlot(x, y);
@@ -267,10 +267,10 @@ export default class GameView extends GameObject {
         chessView.endFill();
       } else if (board.currentPlayer == 2) {
         chessView.lineStyle(1, gameView._circleColor, gameView._transparent);
-        chessView.moveTo(gameView._chessSize/2,gameView._chessSize/2)
-                .lineTo(gameView._width/3 - gameView._chessSize/2,gameView._height / 3 - gameView._chessSize/2)//左上到右下的線
-                .moveTo(gameView._width/3 - gameView._chessSize/2,gameView._chessSize/2)
-                .lineTo(gameView._chessSize/2,gameView._height/3-gameView._chessSize/2);//右上到左下的線
+        chessView.moveTo(gameView._chessSize / 2, gameView._chessSize / 2)
+          .lineTo(gameView._width / 3 - gameView._chessSize / 2, gameView._height / 3 - gameView._chessSize / 2)//左上到右下的線
+          .moveTo(gameView._width / 3 - gameView._chessSize / 2, gameView._chessSize / 2)
+          .lineTo(gameView._chessSize / 2, gameView._height / 3 - gameView._chessSize / 2);//右上到左下的線
         chessView.endFill();
       }
     }
