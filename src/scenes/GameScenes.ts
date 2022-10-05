@@ -1,6 +1,5 @@
 import { IGameObject } from "../interface/IGameObject";
 import Scnens from "./Scenes";
-import { Button ,SettingButton } from "../objects/Button";
 import GameView from "../game/GameView";
 
 /**
@@ -14,10 +13,11 @@ export default class extends Scnens {
    * 初始化場景，塞入我預先想好想塞的所有物件
    * 其中包含按鈕( Button )以及文字( TextoObject )
    */
-  constructor() {
+  constructor(isRobotMode: boolean) {
     super()
-    this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
-    this.element = [new GameView([100, 100])];
+    this.element = [new GameView(this.app, isRobotMode)];
+    //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
+    //this.element = [new GameView([100, 100])];
     //this.element=[new SettingButton([10,180],"BGM ON/OFF")];
     // this.element = [new Button([45, 130], "跟朋友一起玩", "GameScenes")];
   }
@@ -27,7 +27,7 @@ export default class extends Scnens {
  */
   public render(): void {
     if (this.element[0] instanceof GameView) {
-      this.element[0].render!(this.app);
+      this.element[0].render!();
     }
   }
 }

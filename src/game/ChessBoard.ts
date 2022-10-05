@@ -2,6 +2,7 @@ import { Agent } from "../Robot/Agent";
 
 type PlayerWinEvent = (winner: number) => void;
 type PlayerDrawEvent = () => void;
+type BoardUpdateEvent = () => void;
 export class ChessBoard {
   public isRobotMode = true;
   public chesses: number[][] = [];
@@ -14,6 +15,7 @@ export class ChessBoard {
   //from to
   public bingoLines: number[] = [];
   constructor(isRobotBattle: boolean) {
+    this.isRobotMode = isRobotBattle;
     for (let i = 0; i < this.nByn; i++) {
       this.chesses.push([]);
       for (let j = 0; j < this.nByn; j++) {
@@ -28,49 +30,45 @@ export class ChessBoard {
 
   public PlayerWon: PlayerWinEvent[] = [];
   public PlayerDraw!: PlayerDrawEvent;
-
+  public Update!: BoardUpdateEvent;
   //這是一個很醜的function
-  //
-  SetChess(
-    x: number,
-    y: number,
-    player: number
-  ): [isSucess: boolean, x?: number, y?: number] {
+  //包含了設定棋子，勝利判定，平手判定，跟機器人下棋
+  SetChess(x: number, y: number): boolean {
     //已經被按過了
-    if (this.chesses[y][x] != 0) return [false];
+    if (this.chesses[y][x] != 0) return false;
     this.lastX = x;
     this.lastY = y;
     //玩家下棋先處理
-    this.chesses[y][x] = player;
-    this.CheckAll();
+    this.chesses[y][x] = this.currentPlayer;
+    const hasWinner = this.CheckAll().findIndex((element) => element == true);
+    if (hasWinner >= 0) {
+      return true;
+    }
+    this.currentPlayer = this.currentPlayer == 1 ? 2 : 1;
     //是機器人模式，而且接下來是機器人的回合
-    if (this.isRobotMode && player == 1) {
+    if (this.isRobotMode && this.currentPlayer == 2) {
       //更新機器人所看到的環境
       this.agent.UpdateEnvironment(this.chesses);
-      console.log("機器人下棋");
+      console.log("機器人下棋中");
       //機器人選一個地方
       const position = this.agent.PickPosition();
       //機器人下棋
+      if (!position) return false;
       this.chesses[position[1]][position[0]] = 2;
       this.lastX = position[0];
       this.lastY = position[1];
-      this.CheckAll();
-      return [true, this.lastX, this.lastY];
+      this.Update();
+      const hasWinner = this.CheckAll().findIndex((element) => element == true);
+      if (hasWinner > 0) return true;
+      this.currentPlayer = 1;
+      return true;
     }
-    //非機器人模式，就讓玩家自己下棋
-    else {
-      //只有玩家對戰玩家才需要切換玩家
-      this.currentPlayer = this.currentPlayer == 1 ? 2 : 1;
-    }
-    return [true];
+
+    return true;
   }
 
   //檢測只會發生在最新下子的地方
-  CheckAll(): boolean[] {
-    if (this.CheckDraw(this.chesses)) {
-      this.PlayerDraw();
-      return [false, false, false, false];
-    }
+  private CheckAll(): boolean[] {
     //橫向檢測
     const horizontalWinner: boolean = this.CheckLine(this.chesses[this.lastY]);
     //左上到右下的斜線
@@ -118,7 +116,14 @@ export class ChessBoard {
       this.PlayerWon.forEach((element) => {
         element.call(this, this.chesses[this.lastY][this.lastX]);
       });
+      return winningArr;
+    } else {
+      if (this.CheckDraw(this.chesses)) {
+        this.PlayerDraw();
+        return [false, false, false, false];
+      }
     }
+
     return winningArr;
   }
 

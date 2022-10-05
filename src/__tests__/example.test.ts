@@ -20,7 +20,7 @@ describe('這是一個測試的範例', () => {
   it('can check null, defined or not, true or false', () => {
     let s;
     expect(s).toBeUndefined();
-    s = new Button();
+    s = new Button("");
     expect(s).toBeDefined();
     s = null;
     expect(s).toBeNull();
@@ -32,7 +32,7 @@ describe('這是一個測試的範例', () => {
     }
 
     // truthys = 所有在 JS 裡 == true 的東西
-    const truthys = [true, new Button(), [], {}, 1, "1"];
+    const truthys = [true, new Button(""), [], {}, 1, "1"];
     for (const truthy of truthys){
       expect(truthy).toBeTruthy();
     }

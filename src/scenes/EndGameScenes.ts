@@ -3,6 +3,7 @@ import { IGameObject } from "../interface/IGameObject";
 import { TextObject } from "../objects/TextObject";
 import Scnens from "./Scenes";
 import renderer from "../system/renderer";
+import { WINTEXT } from "../types";
 
 /**
  * 結束場景
@@ -14,7 +15,8 @@ export default class extends Scnens {
 
   constructor() {
     super();
-    this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
+    this.element = [new Button("回到主選單", [85, 130], "MenuScenes")];
+    //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
     this.element.push(new SettingButton([10,180],"BGM ON/OFF"));
   }
 
@@ -27,18 +29,20 @@ export default class extends Scnens {
     console.log(this.winner);
     switch (this.winner) {
       case 1:
-        this.element.push(new TextObject([100, 70], "⭕贏麻了，魯🐍"));
+        this.element.push(new TextObject([100, 70], WINTEXT.circleWin));
         break;
       case 2:
-        this.element.push(new TextObject([100, 70], "❌贏麻了，魯🐍"));
+        this.element.push(new TextObject([100, 70], WINTEXT.forkWin));
         break;
       case 0:
-        this.element.push(new TextObject([100, 70], "玩個⭕⭕❌❌\n都沒有贏家，魯🐍"));
+        this.element.push(new TextObject([100, 70], WINTEXT.tie));
         break;
       case -1:
-        this.element.push(new TextObject([100, 70], "還在施工中👷‍♂️，魯🐍"));
+        this.element.push(new TextObject([100, 70], WINTEXT.default));
         break;
-
+      default:
+        this.element.push(new TextObject([100, 70], WINTEXT.default));
+        break;
     }
     for (const ele of this.element) {
       renderer(this.app, ele);
