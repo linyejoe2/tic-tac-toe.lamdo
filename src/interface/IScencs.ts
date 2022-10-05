@@ -1,4 +1,5 @@
 import { Application } from "pixi.js";
+import { Button } from "../objects/Button";
 import { IGameObject } from "./IGameObject";
 
 export interface IScenes {
@@ -7,6 +8,14 @@ export interface IScenes {
   app: Application,// 這個場景的畫布
   winner?: number,// 贏家是誰
   render(): void// 渲染自己在自己的 app 上
+}
+
+export interface IChoseChestScenes {
+  // 我要當圈圈，我要當叉叉，我想看他們自己玩
+  element: [Button, Button, Button],
+  name: 'IChoseChestScenes',
+  app: Application,
+  render(): void
 }
 
 export interface IGameScenes {
