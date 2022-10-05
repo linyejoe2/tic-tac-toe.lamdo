@@ -10,7 +10,10 @@ export class ToggleMusicButton extends GameObject {
 
   constructor(position: number[] = [0, 0]) {
     super(position);
-    this.graph = new Sprite(this._openTextUre);
+    ScenesManager.bgmStatus() ?
+      this.graph = new Sprite(this._openTextUre) :
+      this.graph = new Sprite(this._muteTextUre);
+    // this.graph = new Sprite(this._openTextUre);
     this.graph.x = 0;
     this.graph.y = 0;
     this.graph.height = 15;

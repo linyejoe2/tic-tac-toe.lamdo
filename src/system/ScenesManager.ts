@@ -77,7 +77,7 @@ export class ScenesManager {
       this._activeScenes?.render();
       // 在 DOM 上繪製
       // console.log(this._activeScenes);
-      
+
     }
   }
 
@@ -104,6 +104,7 @@ export class ScenesManager {
    * @returns 有沒有在撥放
    */
   public static bgmStatus(): boolean {
+    if (!sound.exists("bgm")) return false;
     return sound.find("bgm").isPlaying;
   }
 }
