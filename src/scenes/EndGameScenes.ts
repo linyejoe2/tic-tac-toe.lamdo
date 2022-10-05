@@ -3,7 +3,7 @@ import { IGameObject } from "../interface/IGameObject";
 import { TextObject } from "../objects/TextObject";
 import Scnens from "./Scenes";
 import renderer from "../system/renderer";
-import { WINTEXT } from "../types";
+import { WINTEXT } from "../const";
 import { ToggleMusicButton } from "../objects/ToggleMusicButton";
 
 /**

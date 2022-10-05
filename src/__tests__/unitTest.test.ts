@@ -6,7 +6,7 @@ import { TextObject } from "../objects/TextObject";
 import EndGameScenes from "../scenes/EndGameScenes";
 import MenuScenes from "../scenes/MenuScenes";
 import Scenes from "../scenes/Scenes";
-import { WINTEXT } from "../types";
+import { APPSIZE, WINTEXT } from "../const";
 
 
 // 所有 unit test 都放這
@@ -18,15 +18,15 @@ describe('unit testing.', () => {
     it('should have a graph to show', () => {
       expect(testButton.graph.width).toBeGreaterThan(0);
       expect(testButton.graph.height).toBeGreaterThan(0);
-      expect(testButton.graph.width + testButton.position.x).toBeLessThanOrEqual(200);
-      expect(testButton.graph.height + testButton.position.y).toBeLessThanOrEqual(200);
+      expect(testButton.graph.width + testButton.position.x).toBeLessThanOrEqual(APPSIZE.width);
+      expect(testButton.graph.height + testButton.position.y).toBeLessThanOrEqual(APPSIZE.height);
     });
     // 有位置，且沒有超過畫布
     it('should have a position proprity', () => {
       expect(testButton.position.x).toBeGreaterThanOrEqual(0);
       expect(testButton.position.y).toBeGreaterThanOrEqual(0);
-      expect(testButton.position.x).toBeLessThanOrEqual(200);
-      expect(testButton.position.y).toBeLessThanOrEqual(200);
+      expect(testButton.position.x).toBeLessThanOrEqual(APPSIZE.width);
+      expect(testButton.position.y).toBeLessThanOrEqual(APPSIZE.width);
     });
     // 有個文字
     it('should have a text to tell user it mathod.', () => {
@@ -51,8 +51,8 @@ describe('unit testing.', () => {
     it('should have a position', () => {
       expect(testText.position.x).toBeGreaterThanOrEqual(0);
       expect(testText.position.y).toBeGreaterThanOrEqual(0);
-      expect(testText.position.x).toBeLessThanOrEqual(200);
-      expect(testText.position.y).toBeLessThanOrEqual(200);
+      expect(testText.position.x).toBeLessThanOrEqual(APPSIZE.width);
+      expect(testText.position.y).toBeLessThanOrEqual(APPSIZE.width);
     });
   });
   // 開始(選單)畫面

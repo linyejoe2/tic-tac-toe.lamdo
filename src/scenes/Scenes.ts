@@ -1,4 +1,5 @@
 import { Application } from "pixi.js";
+import { APPSIZE } from "../const";
 import { IGameObject } from "../interface/IGameObject";
 import { IScenes } from "../interface/IScencs";
 import renderer from "../system/renderer";
@@ -14,8 +15,8 @@ export default abstract class implements IScenes {
 
   constructor() {
     this.app = new Application({
-      width: 200,// 寬度
-      height: 200,// 高度
+      width: APPSIZE.width,// 寬度
+      height: APPSIZE.height,// 高度
       resolution: 4,// 放大倍數
       backgroundColor: 0x22516b,// 畫布背景顏色
     })
@@ -26,8 +27,8 @@ export default abstract class implements IScenes {
    */
   public render(): void {
     this.app.stage.destroy;
-    // renderer(this.app, this.element);
-    resizer(this.app, this.element);
+    renderer(this.app, this.element);
+    resizer(this.app);
     document.querySelector("#app")?.append(this.app.view);
   }
 }

@@ -17,7 +17,7 @@ export default class extends Scnens {
    */
   constructor() {
     super()
-    this.element = [new Button("跟朋友一起玩", [45, 130], "GameScenes")];
+    this.element = [new Button("跟朋友一起玩", [45, 130], "EndGameScenes")];
     this.element.push(new Button("跟機器人玩", [125, 130], "GameScenesWithRobot"));
     this.element.push(new TextObject([100, 70], "Tic-Tac-Toe.Lamdo"));
     this.element.push(new ToggleMusicButton([10, 180]));
