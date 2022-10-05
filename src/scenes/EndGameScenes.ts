@@ -19,15 +19,13 @@ export default class extends Scnens {
     super();
     this.element = [new Button("回到主選單", [85, 130], "MenuScenes")];
     //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
-    this.element.push(new ToggleMusicButton([10, 180]));
+    this.element.push(new ToggleMusicButton([10, 170]));
   }
 
   /**
  * 在畫布上繪製場景裡的物件。
  */
   public render(): void {
-    // if (this.app.stage.children.) this.app.stage.destroy();
-    // this.app.stage.destroy();
     console.log(this.winner);
     switch (this.winner) {
       case 1:

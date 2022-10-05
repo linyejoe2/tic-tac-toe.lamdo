@@ -7,10 +7,9 @@ import { ScenesManager } from "../system/ScenesManager";
 import EndGameScenes from "../scenes/EndGameScenes";
 import resizer from "../system/resizer";
 
-export default class GameView extends GameObject implements IScenes {
+export default class GameView extends GameObject {
   public graph: Graphics = new Graphics();
   public name: string;
-  public app: Application;
   public winner?: number | undefined;
   public graphics: Graphics = new Graphics();
   public element: IGameObject[];
@@ -24,12 +23,11 @@ export default class GameView extends GameObject implements IScenes {
     [new Graphics(), new Graphics(), new Graphics()],
   ];
   private nByn = 3;
-  constructor(app: Application, isRobotMode: boolean) {
-    super();
+  constructor(isRobotMode: boolean, position: number[] = [0, 0]) {
+    super(position);
     this.board = new ChessBoard(isRobotMode);
-    this._height = app.screen.height*0.85;
-    this._width = app.screen.width*0.85;
-    this.app = app;
+    this._height = 120;
+    this._width = 120;
     this.element = [];
     this.name = "";
     this.SetEventOnChessBoard();
@@ -337,8 +335,8 @@ export default class GameView extends GameObject implements IScenes {
     app.stage.addChild(this.bingoLineGraphics);
   }*/
   public render(): void {
-    this.app.stage.addChild(this.graphics);
-    this.app.stage.addChild(this.bingoLineGraphics);
+    this.graph.addChild(this.graphics);
+    this.graph.addChild(this.bingoLineGraphics);
     // resizer(this.app);
     if (this.element[0] instanceof GameView) {
       this.element[0].render!();
