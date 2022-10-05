@@ -14,6 +14,10 @@ export default class GameView extends GameObject {
   public board: ChessBoard;
   private _width: number;
   private _height: number;
+  private _delay = 1000;
+  private _setChessDelayScale = 1;
+  private _drawLineDelayScale = 1.25;
+  private _endGameDelayScale = 1.5;
   private bingoLineGraphics: Graphics = new Graphics();
   private chessesView: Graphics[][] = [
     [new Graphics(), new Graphics(), new Graphics()],
@@ -54,7 +58,7 @@ export default class GameView extends GameObject {
           ScenesManager.get("EndGameScenes")!.winner = 0;
           ScenesManager.ChangeScenes("EndGameScenes");
           return;
-        }, 500)
+        },  this._delay * this._endGameDelayScale)
       }
       console.log("平手，嫩");
     };
@@ -62,25 +66,26 @@ export default class GameView extends GameObject {
     //有人贏啦
     //當玩家勝利時會呼叫這個funciton，並從參數傳入勝利者 1為O 2為X
     //還沒加入勝利者在第幾排
-    this.board.PlayerWon.push((winner: number) => {
+    this.board.PlayerWon.push(async (winner: number) => {
+      this.SetAllButtonActivate(false);
       if (ScenesManager.get("EndGameScenes")) {
         setTimeout(() => {
           ScenesManager.add(new EndGameScenes);
           ScenesManager.get("EndGameScenes")!.winner = winner;
           ScenesManager.ChangeScenes("EndGameScenes");
           return;
-        }, 500)
+        }, this._delay*this._endGameDelayScale)
       }
       //贏了要把按鈕都disable，防止偷按
-      console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
-      this.SetAllButtonActivate(false);
+      //console.log("贏家出現了!!!!勝利者是:" + (winner == 1 ? "O" : "X"));
       //把bingo線都拿出來畫，哈
-      console.log(this.board.bingoLines);
+      //console.log(this.board.bingoLines);
 
       const color = 0x089487;
       const lineWidth = 3;
 
       this.bingoLineGraphics.beginFill(color);
+      await new Promise(f => setTimeout(f,  this._delay*this._drawLineDelayScale));
       //橫線
       if (this.board.bingoLines[0] >= 0) {
         this.bingoLineGraphics.drawRect(
@@ -123,9 +128,9 @@ export default class GameView extends GameObject {
     //棋盤更新，通常是被機器人更新的，哈
     this.board.Update = async () => {
       this.SetAllButtonActivate(false);
-      await new Promise(f => setTimeout(f, 1000));
-      this.SetAllButtonActivate(true);
+      await new Promise(f => setTimeout(f,  this._delay*this._setChessDelayScale));
       this.DrawSlot(this.board.lastX, this.board.lastY);
+      this.SetAllButtonActivate(true);
       return;
     };
   }
