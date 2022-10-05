@@ -25,9 +25,9 @@ export default class extends Scnens {
   /**
  * 在畫布上繪製場景裡的物件。
  */
-  public render(): void {
-    if (this.element[0] instanceof GameView) {
-      this.element[0].render!();
-    }
-  }
+  // public render(): void {
+  //   if (this.element[0] instanceof GameView) {
+  //     this.element[0].render!();
+  //   }
+  // }
 }

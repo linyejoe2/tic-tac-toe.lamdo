@@ -5,6 +5,7 @@ import { IGameObject } from "../interface/IGameObject";
 import { GameObject } from "../objects/GameObject";
 import { ScenesManager } from "../system/ScenesManager";
 import EndGameScenes from "../scenes/EndGameScenes";
+import resizer from "../system/resizer";
 
 export default class GameView extends GameObject implements IScenes {
   public graph: Graphics = new Graphics();
@@ -338,6 +339,7 @@ export default class GameView extends GameObject implements IScenes {
   public render(): void {
     this.app.stage.addChild(this.graphics);
     this.app.stage.addChild(this.bingoLineGraphics);
+    // resizer(this.app);
     if (this.element[0] instanceof GameView) {
       this.element[0].render!();
     }
