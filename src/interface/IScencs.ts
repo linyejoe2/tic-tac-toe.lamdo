@@ -13,7 +13,7 @@ export interface IScenes {
 export interface IChoseChestScenes {
   // 我要當圈圈，我要當叉叉，我想看他們自己玩
   element: [Button, Button, Button],
-  name: 'IChoseChestScenes',
+  name: string,
   app: Application,
   render(): void
 }
