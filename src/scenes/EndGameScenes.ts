@@ -1,9 +1,10 @@
-import { Button,SettingButton } from "../objects/Button";
+import { Button } from "../objects/Button";
 import { IGameObject } from "../interface/IGameObject";
 import { TextObject } from "../objects/TextObject";
 import Scnens from "./Scenes";
 import renderer from "../system/renderer";
 import { WINTEXT } from "../types";
+import { ToggleMusicButton } from "../objects/ToggleMusicButton";
 
 /**
  * 結束場景
@@ -17,7 +18,7 @@ export default class extends Scnens {
     super();
     this.element = [new Button("回到主選單", [85, 130], "MenuScenes")];
     //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
-    this.element.push(new SettingButton([10,180],"BGM ON/OFF"));
+    this.element.push(new ToggleMusicButton([10, 180]));
   }
 
   /**

@@ -1,7 +1,8 @@
-import { Button,SettingButton } from "../objects/Button";
+import { Button } from "../objects/Button";
 import { IGameObject } from "../interface/IGameObject";
 import { TextObject } from "../objects/TextObject";
 import Scnens from "./Scenes";
+import { ToggleMusicButton } from "../objects/ToggleMusicButton";
 
 /**
  * 開始(主菜單)畫面
@@ -19,7 +20,7 @@ export default class extends Scnens {
     this.element = [new Button("跟朋友一起玩", [45, 130], "GameScenes")];
     this.element.push(new Button("跟機器人玩", [125, 130], "GameScenesWithRobot"));
     this.element.push(new TextObject([100, 70], "Tic-Tac-Toe.Lamdo"));
-    this.element.push(new SettingButton([10,180],"BGM ON/OFF"));
+    this.element.push(new ToggleMusicButton([10, 180]));
 
   }
 }
