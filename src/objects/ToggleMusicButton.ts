@@ -33,11 +33,17 @@ export class ToggleMusicButton extends GameObject {
     // }
     this.graph.on("pointerdown", () => {
       ScenesManager.toggleBgm();
-
-      // 如果在播，就顯示在播
-      ScenesManager.bgmStatus() ? this.graph.texture = this._openTextUre : this.graph.texture = this._muteTextUre;
+      this.updateTexture();
       // 切換圖片舊寫法
       // (this.graph.texture === this._openTextUre) ? this.graph.texture = this._muteTextUre : this.graph.texture = this._openTextUre;
     });
+  }
+
+  public updateTexture(): void {
+    // 如果在播，就顯示在播
+    ScenesManager.bgmStatus() ? this.graph.texture = this._openTextUre : this.graph.texture = this._muteTextUre;
+    setTimeout(() => {
+      ScenesManager.bgmStatus() ? this.graph.texture = this._openTextUre : this.graph.texture = this._muteTextUre;
+    }, 500);
   }
 }

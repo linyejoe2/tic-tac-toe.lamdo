@@ -109,7 +109,7 @@ export class ScenesManager {
    * @returns 有沒有在撥放
    */
   public static bgmStatus(): boolean {
-    if (!sound.exists("bgm")) return false;
+    if (!sound.exists("bgm")) return true;
     return sound.find("bgm").isPlaying;
   }
 }
