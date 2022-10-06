@@ -7,6 +7,7 @@ import EndGameScenes from "../scenes/EndGameScenes";
 import MenuScenes from "../scenes/MenuScenes";
 import Scenes from "../scenes/Scenes";
 import { APPSIZE, WINTEXT } from "../const";
+import GameScenes from "../scenes/GameScenes";
 
 
 // 所有 unit test 都放這
@@ -87,6 +88,12 @@ describe('unit testing.', () => {
         }
       }
     });
+  });
+  describe('testing GameScenes.', () => {
+    const testGameScenes : IScenes = new GameScenes(false);
+    const testGameScenesWithRobot : IScenes = new GameScenes(true);
+    
+    
   });
   describe('testing EndGameScenes.', () => {
     const testEndGameScenes: IScenes = new EndGameScenes();
