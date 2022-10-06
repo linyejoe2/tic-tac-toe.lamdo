@@ -4,7 +4,6 @@ import { TextObject } from "../objects/TextObject";
 import Scnens from "./Scenes";
 import renderer from "../system/renderer";
 import { WINTEXT } from "../const";
-import { ToggleMusicButton } from "../objects/ToggleMusicButton";
 import resizer from "../system/resizer";
 
 /**
@@ -19,7 +18,7 @@ export default class extends Scnens {
     super();
     this.element = [new Button("回到主選單", [85, 130], "MenuScenes")];
     //this.element = [new Button([85, 130], "回到主選單", "MenuScenes")];
-    this.element.push(new ToggleMusicButton([10, 170]));
+    // this.element.push(new ToggleMusicButton([10, 170]));
   }
 
   /**

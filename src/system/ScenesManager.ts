@@ -1,5 +1,6 @@
 import { sound } from "@pixi/sound";
 import { IScenes } from "../interface/IScencs";
+import { ToggleMusicButton } from "../objects/ToggleMusicButton";
 import GameScenes from "../scenes/GameScenes";
 // import GameScenes from "../scenes/GameScenes";
 import { TScenes } from "../types";
@@ -29,6 +30,7 @@ export class ScenesManager {
   public static get activeScenes() {
     return this._activeScenes;
   }
+  public static toggleMusicButton: ToggleMusicButton;
 
   /**
    * 加入場景
@@ -61,29 +63,31 @@ export class ScenesManager {
    * @param name 要去的場景的名稱
    */
   public static ChangeScenes(name: TScenes): void {
-    if (!this._scenesMap) return;
-    if (this._scenesMap.has(name)) {
-      if (name === "GameScenes") {
-        this.get(name)?.app.destroy();
-        this._scenesMap.set("GameScenes", new GameScenes(false));
-      }
-      else if (name === "GameScenesWithRobot") {
-        this.get(name)?.app.destroy();
-        this._scenesMap.set("GameScenesWithRobot", new GameScenes(true));
-      }
-      // if (name === "MenuScenes") this._scenesMap.set("MenuScenes", new MenuScenes());
-      // if (name === "EndGameScenes") this._scenesMap.set("EndGameScenes", new EndGameScenes());
-      // 刪除 DOM 上原本的場景
-      try {
-        this._activeScenes.app.view.remove();
-      } catch (e) { /* empty */ }
-      // 更改場景
-      this._activeScenes = this._scenesMap.get(name)!;
-      this._activeScenes?.render();
-      // 在 DOM 上繪製
-      // console.log(this._activeScenes);
+    // 如果沒有任何場景，或是沒有他想去的場景，就退出
+    if (!this._scenesMap || !this._scenesMap.has(name)) return;
 
+    // 如果他想去的場景是 `GameScenes` 就給他客製化
+    if (name === "GameScenes") {
+      this.get(name)?.app.destroy();
+      this._scenesMap.set("GameScenes", new GameScenes(false));
     }
+    else if (name === "GameScenesWithRobot") {
+      this.get(name)?.app.destroy();
+      this._scenesMap.set("GameScenesWithRobot", new GameScenes(true));
+    }
+
+    // 刪除 DOM 上原本的場景(更新，釋放資源)
+    try { this._activeScenes.app.view.remove(); } catch (e) { /* empty */ }
+
+    // 更改場景
+    this._activeScenes = this._scenesMap.get(name)!;
+
+    // 綁定音樂按鈕，如果音樂按鈕還沒實例，就實例，如果還沒加入，就加入。
+    if (!this.toggleMusicButton) this.toggleMusicButton = new ToggleMusicButton([13, 170]);
+    if (!this._activeScenes.element.some(ele => ele instanceof ToggleMusicButton)) this._activeScenes.element.push(this.toggleMusicButton);
+
+    // 呼叫場景裡的渲染函式
+    this._activeScenes?.render();
   }
 
   public static toggleBgm(): void {

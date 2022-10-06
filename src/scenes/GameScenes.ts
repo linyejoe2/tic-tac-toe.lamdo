@@ -1,7 +1,6 @@
 import { IGameObject } from "../interface/IGameObject";
 import Scnens from "./Scenes";
 import GameView from "../game/GameView";
-import { ToggleMusicButton } from "../objects/ToggleMusicButton";
 
 /**
  * 開始(主菜單)畫面
@@ -16,7 +15,7 @@ export default class extends Scnens {
    */
   constructor(isRobotMode: boolean) {
     super()
-    this.element = [new GameView(isRobotMode,[40,30])];
-    this.element.push(new ToggleMusicButton([10, 170]));
+    this.element = [new GameView(isRobotMode, [40, 30])];
+    // this.element.push(new ToggleMusicButton([10, 170]));
   }
 }
