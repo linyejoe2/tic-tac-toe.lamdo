@@ -7,10 +7,10 @@ import { ScenesManager } from "../system/ScenesManager";
 export class ToggleMusicButton extends GameObject {
   graph;
 
-  private _muteTextUre = Texture.from("/picture/mute_rb.png");
-  private _openTextUre = Texture.from("/picture/soun_rb.png");
-  // private _muteTextUre = Texture.from(import.meta.env.BASE_URL + "/picture/mute_rb.png");
-  // private _openTextUre = Texture.from(import.meta.env.BASE_URL + "/picture/soun_rb.png");
+  // private _muteTextUre = Texture.from("/picture/mute_rb.png");
+  // private _openTextUre = Texture.from("/picture/soun_rb.png");
+  private _muteTextUre = Texture.from("./picture/mute_rb.png");
+  private _openTextUre = Texture.from("./picture/soun_rb.png");
   // private _muteTextUre = Texture.from(muteImage);
   // private _openTextUre = Texture.from(soundImage);
 
