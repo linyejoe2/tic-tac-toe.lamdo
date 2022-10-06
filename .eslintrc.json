@@ -22,7 +22,7 @@
       "asyncArrow": "always"
     } ],
     "no-empty-function": "off", // 不能有空白的函式
-    "unused-imports/no-unused-imports-ts": "error",
+    "unused-imports/no-unused-imports-ts": "error",// 不能有未使用的引用
     "@typescript-eslint/no-empty-function": "warn" // 不能有空白的函式
   }
 }

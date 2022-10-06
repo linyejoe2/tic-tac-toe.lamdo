@@ -1,6 +1,7 @@
 import { sound } from "@pixi/sound";
 import { IScenes } from "../interface/IScencs";
 import GameScenes from "../scenes/GameScenes";
+// import GameScenes from "../scenes/GameScenes";
 import { TScenes } from "../types";
 
 /**
@@ -48,10 +49,8 @@ export class ScenesManager {
   }
 
   /**
- * 加入場景
- * @param scenes 場景物件
- * @param scenesName 場景的名稱，可選，不定義就是直接去抓場景物件的名稱
- * @returns 加入是否成功，不成功代表有加過了。
+ * 獲得場景
+ * @param scenesName 場景的名稱
  */
   public static get(scenesName: TScenes): IScenes | undefined {
     return this._scenesMap?.get(scenesName);
@@ -64,8 +63,14 @@ export class ScenesManager {
   public static ChangeScenes(name: TScenes): void {
     if (!this._scenesMap) return;
     if (this._scenesMap.has(name)) {
-      if (name === "GameScenes") this._scenesMap.set("GameScenes", new GameScenes(false));
-      if (name === "GameScenesWithRobot") this._scenesMap.set("GameScenesWithRobot", new GameScenes(true));
+      if (name === "GameScenes") {
+        this.get(name)?.app.destroy();
+        this._scenesMap.set("GameScenes", new GameScenes(false));
+      }
+      else if (name === "GameScenesWithRobot") {
+        this.get(name)?.app.destroy();
+        this._scenesMap.set("GameScenesWithRobot", new GameScenes(true));
+      }
       // if (name === "MenuScenes") this._scenesMap.set("MenuScenes", new MenuScenes());
       // if (name === "EndGameScenes") this._scenesMap.set("EndGameScenes", new EndGameScenes());
       // 刪除 DOM 上原本的場景
@@ -104,7 +109,7 @@ export class ScenesManager {
    * @returns 有沒有在撥放
    */
   public static bgmStatus(): boolean {
-    if (!sound.exists("bgm")) return false;
+    if (!sound.exists("bgm")) return true;
     return sound.find("bgm").isPlaying;
   }
 }

@@ -1,12 +1,18 @@
 import { Sprite, Texture } from "pixi.js";
 import { GameObject } from "./GameObject";
 import { ScenesManager } from "../system/ScenesManager";
+// import muteImage from '/picture/mute_rb.png';
+// import soundImage from "/picture/soun_rb.png";
 
 export class ToggleMusicButton extends GameObject {
   graph;
 
   private _muteTextUre = Texture.from("/picture/mute_rb.png");
   private _openTextUre = Texture.from("/picture/soun_rb.png");
+  // private _muteTextUre = Texture.from(import.meta.env.BASE_URL + "/picture/mute_rb.png");
+  // private _openTextUre = Texture.from(import.meta.env.BASE_URL + "/picture/soun_rb.png");
+  // private _muteTextUre = Texture.from(muteImage);
+  // private _openTextUre = Texture.from(soundImage);
 
   constructor(position: number[] = [0, 0]) {
     super(position);
@@ -33,11 +39,17 @@ export class ToggleMusicButton extends GameObject {
     // }
     this.graph.on("pointerdown", () => {
       ScenesManager.toggleBgm();
-
-      // 如果在播，就顯示在播
-      ScenesManager.bgmStatus() ? this.graph.texture = this._openTextUre : this.graph.texture = this._muteTextUre;
+      this.updateTexture();
       // 切換圖片舊寫法
       // (this.graph.texture === this._openTextUre) ? this.graph.texture = this._muteTextUre : this.graph.texture = this._openTextUre;
     });
+  }
+
+  public updateTexture(): void {
+    // 如果在播，就顯示在播
+    ScenesManager.bgmStatus() ? this.graph.texture = this._openTextUre : this.graph.texture = this._muteTextUre;
+    setTimeout(() => {
+      ScenesManager.bgmStatus() ? this.graph.texture = this._openTextUre : this.graph.texture = this._muteTextUre;
+    }, 500);
   }
 }

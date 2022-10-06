@@ -26,7 +26,7 @@ export default class extends Scnens {
  * 在畫布上繪製場景裡的物件。
  */
   public render(): void {
-    console.log(this.winner);
+    // console.log(this.winner);
     switch (this.winner) {
       case 1:
         this.element.push(new TextObject([100, 70], WINTEXT.circleWin));
