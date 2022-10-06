@@ -33,7 +33,7 @@ describe('這是一個測試的範例', () => {
 
     // truthys = 所有在 JS 裡 == true 的東西
     const truthys = [true, new Button(""), [], {}, 1, "1"];
-    for (const truthy of truthys){
+    for (const truthy of truthys) {
       expect(truthy).toBeTruthy();
     }
   });

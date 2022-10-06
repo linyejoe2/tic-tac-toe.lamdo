@@ -8,7 +8,7 @@ import MenuScenes from "../scenes/MenuScenes";
 import Scenes from "../scenes/Scenes";
 import { APPSIZE, WINTEXT } from "../const";
 import GameScenes from "../scenes/GameScenes";
-
+require('webgl-mock');
 
 // 所有 unit test 都放這
 describe('unit testing.', () => {
@@ -91,7 +91,7 @@ describe('unit testing.', () => {
     });
   });
   describe('testing GameScenes.', () => {
-    const testGameScenes: IScenes = new GameScenes(false);
+    const testGameScenes: IScenes = new GameScenes(false, 1);
     // const testGameScenesWithRobot: IScenes = new GameScenes(true);
     it('should naming `GameScenes`', () => {
       expect(testGameScenes.name).toBe('GameScenes');

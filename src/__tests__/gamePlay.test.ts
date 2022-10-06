@@ -1,5 +1,6 @@
 import MenuScenes from "../scenes/MenuScenes";
 import { ScenesManager } from "../system/ScenesManager";
+require('webgl-mock');
  
 describe('GamePlay', () => {
   // 應該要初始化場景管理器，並顯示第一個場景

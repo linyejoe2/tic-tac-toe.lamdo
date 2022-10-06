@@ -65,11 +65,11 @@ export class ScenesManager {
     if (this._scenesMap.has(name)) {
       if (name === "GameScenes") {
         this.get(name)?.app.destroy();
-        this._scenesMap.set("GameScenes", new GameScenes(false));
+        this._scenesMap.set("GameScenes", new GameScenes(false, 1));
       }
       else if (name === "GameScenesWithRobot") {
         this.get(name)?.app.destroy();
-        this._scenesMap.set("GameScenesWithRobot", new GameScenes(true));
+        this._scenesMap.set("GameScenesWithRobot", new GameScenes(true, 1));
       }
       // if (name === "MenuScenes") this._scenesMap.set("MenuScenes", new MenuScenes());
       // if (name === "EndGameScenes") this._scenesMap.set("EndGameScenes", new EndGameScenes());

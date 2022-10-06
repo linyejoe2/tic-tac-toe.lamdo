@@ -26,7 +26,7 @@ export class Button extends GameObject {
 
     // 把設定好的文字塞進去
     this.text = _text;
-    const textTemp = new Text(_text, {
+    const textTemp = new Text("_text", {
       fontSize: 6,
       fill: ["#246080"]
     });
