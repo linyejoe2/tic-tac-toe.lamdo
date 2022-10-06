@@ -14,10 +14,10 @@ export default class GameView extends GameObject {
   public board: ChessBoard;
   private _width: number;
   private _height: number;
-  private _delay = 1000;
+  private _delay = 300;
   private _setChessDelayScale = 1;
-  private _drawLineDelayScale = 1.4;
-  private _endGameDelayScale = 1.8;
+  private _drawLineDelayScale = 1.25;
+  private _endGameDelayScale = 1.5;
   private _bingoLineColor = 0xffffff;//老白線寶了
   private _slotColor = 0x366178;//底色
   private _lineColor = 0x92C3DD;//邊線色
@@ -188,6 +188,7 @@ export default class GameView extends GameObject {
         this,
       ]);
   }
+
 
   public DrawSlot(x: number, y: number) {
     this.chessesView[y][x].beginFill(this._slotColor);
