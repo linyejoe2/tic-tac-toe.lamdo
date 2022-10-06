@@ -32,8 +32,9 @@ describe('unit testing.', () => {
     // 有個文字
     it('should have a text to tell user it mathod.', () => {
       expect(testButton.text).toBe("I will test the Button");
-      const text1: any = testButton.graph.getChildAt(0);
-      expect(text1.text).toBe("I will test the Button");
+      // const text1: any = testButton.graph.getChildAt(0);
+      // expect(text1.text).toBe("I will test the Button");
+      expect("I will test the Button").toEqual((testButton.graph.getChildAt(0) as Text).text);
     });
     // 初始化時應該要有看的到的旗標，且可以關掉。
     it('should can set visible, default should be ture.', () => {
@@ -90,10 +91,12 @@ describe('unit testing.', () => {
     });
   });
   describe('testing GameScenes.', () => {
-    const testGameScenes : IScenes = new GameScenes(false);
-    const testGameScenesWithRobot : IScenes = new GameScenes(true);
-    
-    
+    const testGameScenes: IScenes = new GameScenes(false);
+    // const testGameScenesWithRobot: IScenes = new GameScenes(true);
+    it('should naming `GameScenes`', () => {
+      expect(testGameScenes.name).toBe('GameScenes');
+    });
+
   });
   describe('testing EndGameScenes.', () => {
     const testEndGameScenes: IScenes = new EndGameScenes();
